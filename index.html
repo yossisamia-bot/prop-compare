@@ -415,23 +415,23 @@
       <!-- Headers -->
       <div class="scenario-header">נתוני בסיס</div>
       <div class="scenario-header" id="h0"><input class="header-fin-input" id="headerFin_0" type="number" value="0" min="0" max="100" onchange="syncFinFromHeader()" oninput="syncFinFromHeader()"><span class="header-fin-label">% מימון</span></div>
-      <div class="scenario-header" id="h1"><input class="header-fin-input" id="headerFin_1" type="number" value="70" min="0" max="100" onchange="syncFinFromHeader()" oninput="syncFinFromHeader()"><span class="header-fin-label">% מימון</span></div>
-      <div class="scenario-header" id="h2"><input class="header-fin-input" id="headerFin_2" type="number" value="65" min="0" max="100" onchange="syncFinFromHeader()" oninput="syncFinFromHeader()"><span class="header-fin-label">% מימון</span></div>
+      <div class="scenario-header" id="h1"><input class="header-fin-input" id="headerFin_1" type="number" value="50" min="0" max="100" onchange="syncFinFromHeader()" oninput="syncFinFromHeader()"><span class="header-fin-label">% מימון</span></div>
+      <div class="scenario-header" id="h2"><input class="header-fin-input" id="headerFin_2" type="number" value="70" min="0" max="100" onchange="syncFinFromHeader()" oninput="syncFinFromHeader()"><span class="header-fin-label">% מימון</span></div>
 
       <!-- Section: נתוני קלט -->
       <div class="section-title">נתוני קלט (שדות ירוקים – ניתנים לשינוי)</div>
 
       <!-- Row: מחיר בית -->
       <div class="cell-label alt">מחיר בית</div>
-      <div class="cell-value green-cell"><input class="green-input" id="housePrice_0" type="text" value="230,000" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="housePrice_0" type="text" value="200,000" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
       <div class="cell-value green-cell"><input class="green-input" id="housePrice_1" type="text" value="200,000" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
-      <div class="cell-value green-cell"><input class="green-input" id="housePrice_2" type="text" value="170,000" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="housePrice_2" type="text" value="200,000" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
 
       <!-- Row: שכירות חודשית -->
       <div class="cell-label">שכירות חודשית</div>
-      <div class="cell-value green-cell"><input class="green-input" id="rent_0" type="text" value="2,000" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
-      <div class="cell-value green-cell"><input class="green-input" id="rent_1" type="text" value="1,750" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
-      <div class="cell-value green-cell"><input class="green-input" id="rent_2" type="text" value="1,500" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="rent_0" type="text" value="1,850" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="rent_1" type="text" value="1,850" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="rent_2" type="text" value="1,850" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
 
       <!-- Fixed costs section header -->
       <div class="section-title">הוצאות שנתיות (קבועות)</div>
@@ -913,11 +913,11 @@ function recalc() {
 // ======= Default Values =======
 const DEFAULTS = [
   // Scenario 0: 0% financing | $230k × 10.5% / 12 = $2,013/mo
-  { housePrice: '230,000', rent: '2,000', rate: 6.5, ioYears: 5, piYears: 15, financing: 0,  holding: 10 },
+  { housePrice: '200,000', rent: '1,850', rate: 6.5, ioYears: 5, piYears: 15, financing: 0,  holding: 10 },
   // Scenario 1: 70% financing | $200k × 10.5% / 12 = $1,750/mo
-  { housePrice: '200,000', rent: '1,750', rate: 6.5, ioYears: 5, piYears: 15, financing: 70, holding: 10 },
+  { housePrice: '200,000', rent: '1,850', rate: 6.5, ioYears: 5, piYears: 15, financing: 50, holding: 10 },
   // Scenario 2: 65% financing | $170k × 10.5% / 12 = $1,488/mo
-  { housePrice: '170,000', rent: '1,500', rate: 6.5, ioYears: 5, piYears: 15, financing: 65, holding: 10 },
+  { housePrice: '200,000', rent: '1,850', rate: 6.5, ioYears: 5, piYears: 15, financing: 70, holding: 10 },
 ];
 
 function resetDefaults() {
@@ -925,7 +925,7 @@ function resetDefaults() {
     const d = DEFAULTS[i];
     const fields = ['housePrice','rent','rate','ioYears','piYears','holding'];
     for (const f of fields) {
-      const el = document.getElementById(`${f}_${i}`);
+      const el = document.getElementById(`${f}_${ih}`);
       if (el) {
         el.value = d[f];
         el.classList.remove('input-flash');
