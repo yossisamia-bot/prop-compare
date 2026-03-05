@@ -86,10 +86,16 @@
     overflow: hidden;
   }
 
+  .grid-scroll-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .scenarios-grid {
     display: grid;
     grid-template-columns: 220px 1fr 1fr 1fr;
     border-bottom: 2px solid #e2e8f0;
+    min-width: 750px;
   }
 
   .scenario-header {
@@ -381,6 +387,69 @@
     border-top: 1px solid #e2e8f0;
     border-radius: 0 0 12px 12px;
   }
+
+  /* ===== Mobile Responsive ===== */
+  @media (max-width: 768px) {
+    body { padding: 8px; }
+
+    header {
+      padding: 16px;
+      flex-direction: column;
+      align-items: stretch;
+      text-align: center;
+    }
+    header h1 { font-size: 1.25rem; }
+    header p { font-size: 0.8rem; }
+
+    .legend {
+      justify-content: center;
+      gap: 8px;
+    }
+    .legend-item { font-size: 0.72rem; padding: 3px 8px; }
+
+    .reset-btn {
+      align-self: center;
+      padding: 6px 14px;
+      font-size: 0.82rem;
+    }
+
+    /* Scroll hint indicator */
+    .grid-scroll-wrapper {
+      position: relative;
+    }
+    .grid-scroll-wrapper::after {
+      content: '← גלול →';
+      display: block;
+      text-align: center;
+      font-size: 0.72rem;
+      color: #9ca3af;
+      padding: 4px 0;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.9), transparent);
+    }
+    .grid-scroll-wrapper.scrolled::after {
+      display: none;
+    }
+
+    .scenarios-grid {
+      grid-template-columns: 140px minmax(130px, 1fr) minmax(130px, 1fr) minmax(130px, 1fr);
+    }
+
+    .cell-label { font-size: 0.75rem; padding: 6px 8px; }
+    .cell-value { font-size: 0.8rem; padding: 5px 6px; }
+    .section-title { font-size: 0.82rem; padding: 8px 10px; }
+    .scenario-header { padding: 10px 6px; font-size: 0.85rem; }
+    .scenario-header:first-child { font-size: 0.75rem; padding-right: 8px; }
+
+    input.green-input { font-size: 0.82rem; padding: 6px 4px; }
+    .header-fin-input { width: 40px; font-size: 0.88rem; }
+    .header-fin-label { font-size: 0.85rem; }
+
+    /* Sensitivity table mobile */
+    .sensitivity-wrapper { padding: 16px 10px; overflow-x: auto; }
+    .sensitivity-table { font-size: 0.78rem; min-width: 500px; }
+    .sensitivity-table th { padding: 8px 10px; }
+    .sensitivity-table td { padding: 7px 10px; }
+  }
 </style>
 </head>
 <body>
@@ -410,6 +479,7 @@
   </header>
 
   <div class="main-card">
+    <div class="grid-scroll-wrapper" id="gridScrollWrapper">
     <div class="scenarios-grid" id="mainGrid">
 
       <!-- Headers -->
@@ -668,6 +738,7 @@
       <div class="cell-value light-blue negative" id="annualCash_2">$-2,117</div>
 
     </div><!-- end scenarios-grid -->
+    </div><!-- end grid-scroll-wrapper -->
 
     <!-- Sensitivity Analysis -->
     <div class="sensitivity-wrapper">
@@ -912,11 +983,11 @@ function recalc() {
 
 // ======= Default Values =======
 const DEFAULTS = [
-  // Scenario 0: 0% financing | $230k × 10.5% / 12 = $2,013/mo
+  // Scenario 0: 0% financing | $200k | rent $1,850
   { housePrice: '200,000', rent: '1,850', rate: 6.5, ioYears: 5, piYears: 15, financing: 0,  holding: 10 },
-  // Scenario 1: 70% financing | $200k × 10.5% / 12 = $1,750/mo
+  // Scenario 1: 50% financing | $200k | rent $1,850
   { housePrice: '200,000', rent: '1,850', rate: 6.5, ioYears: 5, piYears: 15, financing: 50, holding: 10 },
-  // Scenario 2: 65% financing | $170k × 10.5% / 12 = $1,488/mo
+  // Scenario 2: 70% financing | $200k | rent $1,850
   { housePrice: '200,000', rent: '1,850', rate: 6.5, ioYears: 5, piYears: 15, financing: 70, holding: 10 },
 ];
 
@@ -925,7 +996,7 @@ function resetDefaults() {
     const d = DEFAULTS[i];
     const fields = ['housePrice','rent','rate','ioYears','piYears','holding'];
     for (const f of fields) {
-      const el = document.getElementById(`${f}_${ih}`);
+      const el = document.getElementById(`${f}_${i}`);
       if (el) {
         el.value = d[f];
         el.classList.remove('input-flash');
@@ -962,6 +1033,14 @@ function toggleGroup(groupId) {
 
 // Run on load
 recalc();
+
+// Hide scroll hint after first scroll on mobile
+const scrollWrapper = document.getElementById('gridScrollWrapper');
+if (scrollWrapper) {
+  scrollWrapper.addEventListener('scroll', function() {
+    this.classList.add('scrolled');
+  }, { once: true });
+}
 </script>
 
 
