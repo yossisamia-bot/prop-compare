@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)file:///C:/Users/yossi/Downloads/index_1.html -->
+<html lang="he" dir="rtl"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>השוואת נכסים – מחשבון השקעות</title>
+<style>
+  :root {
+    --green-bg: #c6efce;
+    --green-border: #70ad47;
+    --blue-header: #2f5496;
+    --blue-section: #4472c4;
+    --yellow-bg: #fff2cc;
+    --light-blue-bg: #ddebf7;
+    --gray-row: #f2f2f2;
+    --white: #ffffff;
+    --label-bg: #d6dce5;
+    --text-dark: #1a1a2e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f0f4f8;
+    color: var(--text-dark);
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .page-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  header {
+    background: var(--blue-header);
+    color: white;
+    padding: 28px 32px;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  header h1 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+
+  header p {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 4px;
+  }
+
+  .legend {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    font-size: 0.82rem;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.15);
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  .legend-dot {
+    width: 14px; height: 14px;
+    border-radius: 3px;
+  }
+
+  .main-card {
+    background: white;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+
+  .scenarios-grid {
+    display: grid;
+    grid-template-columns: 220px 1fr 1fr 1fr;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  .scenario-header {
+    background: var(--blue-header);
+    color: white;
+    text-align: center;
+    padding: 14px 10px;
+    font-weight: 700;
+    font-size: 1rem;
+    border-right: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .scenario-header:first-child {
+    background: #1a3561;
+    text-align: right;
+    padding-right: 16px;
+    font-size: 0.85rem;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .section-title {
+    grid-column: 1 / -1;
+    background: var(--blue-section);
+    color: white;
+    padding: 10px 16px;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .row {
+    display: contents;
+  }
+
+  .row:hover > * {
+    background-color: rgba(0,0,0,0.02);
+  }
+
+  .cell-label {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e2e8f0;
+    border-right: 1px solid #e2e8f0;
+  }
+
+  .cell-label.alt { background: var(--label-bg); }
+  .cell-label.gray { background: var(--gray-row); }
+
+  .cell-value {
+    padding: 6px 10px;
+    text-align: center;
+    font-size: 0.88rem;
+    border-bottom: 1px solid #e2e8f0;
+    border-right: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cell-value.gray { background: var(--gray-row); }
+  .cell-value.yellow { background: var(--yellow-bg); font-weight: 700; }
+  .cell-value.light-blue { background: var(--light-blue-bg); }
+  .cell-value.output { color: #1e40af; font-weight: 500; }
+
+  .cell-value.positive { color: #166534; }
+  .cell-value.negative { color: #991b1b; }
+
+  /* Editable green input */
+  input.green-input {
+    width: 100%;
+    border: none;
+    background: var(--green-bg);
+    color: #14532d;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 8px 6px;
+    outline: none;
+    border-radius: 4px;
+    transition: all 0.15s;
+    cursor: text;
+  }
+
+  input.green-input:focus {
+    background: #a7f3a0;
+    box-shadow: 0 0 0 2px var(--green-border);
+  }
+
+  input.green-input:hover:not(:focus) {
+    background: #b8f0c0;
+  }
+
+  .cell-value.green-cell {
+    background: var(--green-bg);
+    padding: 4px 8px;
+  }
+
+  /* Sensitivity table */
+  .sensitivity-wrapper {
+    padding: 24px 20px;
+    border-top: 2px solid #e2e8f0;
+  }
+
+  .sensitivity-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--blue-header);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--blue-section);
+  }
+
+  .sensitivity-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.87rem;
+  }
+
+  .sensitivity-table th {
+    background: var(--blue-header);
+    color: white;
+    padding: 10px 16px;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .sensitivity-table th:first-child { text-align: center; }
+
+  .sensitivity-table td {
+    padding: 9px 16px;
+    text-align: center;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .sensitivity-table tr:nth-child(even) td { background: #f8fafc; }
+  .sensitivity-table tr:hover td { background: var(--light-blue-bg); }
+
+  .sensitivity-table td:first-child {
+    font-weight: 600;
+    color: #374151;
+    background: var(--label-bg) !important;
+  }
+
+  .sensitivity-table .good { color: #166534; font-weight: 700; }
+  .sensitivity-table .neutral { color: #111827; font-weight: 500; }
+  .sensitivity-table .bad { color: #991b1b; font-weight: 600; }
+
+  .note {
+    font-size: 0.78rem;
+    color: #6b7280;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #f9fafb;
+    border-right: 3px solid var(--blue-section);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .spacer-row > * {
+    padding: 4px 0;
+    background: #f8fafc;
+  }
+
+  /* Collapsible groups */
+  .toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px; height: 20px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.25);
+    border: 1px solid rgba(255,255,255,0.4);
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-left: 8px;
+    line-height: 1;
+    transition: background 0.15s;
+    flex-shrink: 0;
+    user-select: none;
+  }
+  .toggle-btn:hover { background: rgba(255,255,255,0.4); }
+
+  .toggle-btn-gray {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px; height: 18px;
+    border-radius: 3px;
+    background: #e2e8f0;
+    border: 1px solid #cbd5e1;
+    color: #475569;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-left: 6px;
+    line-height: 1;
+    transition: background 0.15s;
+    flex-shrink: 0;
+    user-select: none;
+  }
+  .toggle-btn-gray:hover { background: #cbd5e1; }
+
+  [data-group] {
+    transition: opacity 0.15s;
+  }
+  [data-group].group-hidden {
+    display: none !important;
+  }
+
+  /* Header financing input */
+  .scenario-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+  }
+  .header-fin-input {
+    width: 48px;
+    border: none;
+    background: rgba(198,239,206,0.85);
+    color: #14532d;
+    font-weight: 700;
+    font-size: 1rem;
+    text-align: center;
+    padding: 4px 2px;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.15s;
+    -moz-appearance: textfield;
+  }
+  .header-fin-input::-webkit-inner-spin-button,
+  .header-fin-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .header-fin-input:focus {
+    background: #a7f3a0;
+    box-shadow: 0 0 0 2px #70ad47;
+  }
+  .header-fin-label {
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  /* Reset button */
+  .reset-btn {
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.5);
+    color: white;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s;
+    white-space: nowrap;
+    font-family: inherit;
+    letter-spacing: 0.2px;
+  }
+  .reset-btn:hover {
+    background: rgba(255,255,255,0.28);
+    border-color: rgba(255,255,255,0.8);
+    transform: scale(1.03);
+  }
+  .reset-btn:active {
+    transform: scale(0.98);
+  }
+
+  /* Reset flash animation */
+  @keyframes flashGreen {
+    0%   { background: #a7f3a0; }
+    100% { background: var(--green-bg); }
+  }
+  .input-flash { animation: flashGreen 0.5s ease-out; }
+
+  /* footer */
+  .footer-note {
+    text-align: center;
+    padding: 16px;
+    font-size: 0.78rem;
+    color: #9ca3af;
+    background: #f9fafb;
+    border-top: 1px solid #e2e8f0;
+    border-radius: 0 0 12px 12px;
+  }
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+  <header>
+    <div>
+      <h1>📊 השוואת נכסים – מחשבון השקעה</h1>
+      <p>שנו את השדות הירוקים לקבלת חישוב מיידי</p>
+    </div>
+    <button class="reset-btn" onclick="resetDefaults()" title="החזר את כל השדות לערכי ברירת המחדל">
+      ↺ איפוס לבסיס
+    </button>
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#c6efce; border:1px solid #70ad47;"></div>
+        שדה לשינוי
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#ddebf7; border:1px solid #4472c4;"></div>
+        תוצאה
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#fff2cc; border:1px solid #f0c040;"></div>
+        סה"כ הון עצמי
+      </div>
+    </div>
+  </header>
+
+  <div class="main-card">
+    <div class="scenarios-grid" id="mainGrid">
+
+      <!-- Headers -->
+      <div class="scenario-header">נתוני בסיס</div>
+      <div class="scenario-header" id="h0"><input class="header-fin-input" id="headerFin_0" type="number" value="0" min="0" max="100" onchange="syncFinFromHeader()" oninput="syncFinFromHeader()"><span class="header-fin-label">% מימון</span></div>
+      <div class="scenario-header" id="h1"><input class="header-fin-input" id="headerFin_1" type="number" value="70" min="0" max="100" onchange="syncFinFromHeader()" oninput="syncFinFromHeader()"><span class="header-fin-label">% מימון</span></div>
+      <div class="scenario-header" id="h2"><input class="header-fin-input" id="headerFin_2" type="number" value="65" min="0" max="100" onchange="syncFinFromHeader()" oninput="syncFinFromHeader()"><span class="header-fin-label">% מימון</span></div>
+
+      <!-- Section: נתוני קלט -->
+      <div class="section-title">נתוני קלט (שדות ירוקים – ניתנים לשינוי)</div>
+
+      <!-- Row: מחיר בית -->
+      <div class="cell-label alt">מחיר בית</div>
+      <div class="cell-value green-cell"><input class="green-input" id="housePrice_0" type="text" value="230,000" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="housePrice_1" type="text" value="200,000" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="housePrice_2" type="text" value="170,000" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
+
+      <!-- Row: שכירות חודשית -->
+      <div class="cell-label">שכירות חודשית</div>
+      <div class="cell-value green-cell"><input class="green-input" id="rent_0" type="text" value="2,000" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="rent_1" type="text" value="1,750" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="rent_2" type="text" value="1,500" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
+
+      <!-- Fixed costs section header -->
+      <div class="section-title">הוצאות שנתיות (קבועות)</div>
+
+      <!-- Row: מס רכוש -->
+      <div class="cell-label alt">מס רכוש (%)</div>
+      <div class="cell-value gray output" id="propertyTaxPct_0">3.2%</div>
+      <div class="cell-value gray output" id="propertyTaxPct_1">3.2%</div>
+      <div class="cell-value gray output" id="propertyTaxPct_2">3.2%</div>
+
+      <!-- Row: ביטוח נכס -->
+      <div class="cell-label">ביטוח נכס (שנתי)</div>
+      <div class="cell-value output" id="ins_0">$1,150</div>
+      <div class="cell-value output" id="ins_1">$1,150</div>
+      <div class="cell-value output" id="ins_2">$1,150</div>
+
+      <!-- Row: ניהול נכסים -->
+      <div class="cell-label alt">ניהול נכסים (%)</div>
+      <div class="cell-value gray output" id="mgmt_0">8.0%</div>
+      <div class="cell-value gray output" id="mgmt_1">8.0%</div>
+      <div class="cell-value gray output" id="mgmt_2">8.0%</div>
+
+      <!-- Row: HOA -->
+      <div class="cell-label">HOA שנתי</div>
+      <div class="cell-value output" id="hoa_0">$900</div>
+      <div class="cell-value output" id="hoa_1">$900</div>
+      <div class="cell-value output" id="hoa_2">$900</div>
+
+      <!-- Row: Vacancy -->
+      <div class="cell-label alt">Vacancy (%)</div>
+      <div class="cell-value gray output" id="vac_0">4.0%</div>
+      <div class="cell-value gray output" id="vac_1">4.0%</div>
+      <div class="cell-value gray output" id="vac_2">4.0%</div>
+
+      <!-- Section: מימון -->
+      <div class="section-title">פרמטרי מימון</div>
+
+      <!-- Row: ריבית -->
+      <div class="cell-label alt">ריבית צפויה</div>
+      <div class="cell-value green-cell"><input class="green-input" id="rate_0" type="number" value="6.5" step="0.1" onchange="recalc()" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="rate_1" type="number" value="6.5" step="0.1" onchange="recalc()" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="rate_2" type="number" value="6.5" step="0.1" onchange="recalc()" oninput="recalc()"></div>
+
+      <!-- Row: IO Years -->
+      <div class="cell-label">שנים ריבית בלבד (IO)</div>
+      <div class="cell-value green-cell"><input class="green-input" id="ioYears_0" type="number" value="5" onchange="recalc()" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="ioYears_1" type="number" value="5" onchange="recalc()" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="ioYears_2" type="number" value="5" onchange="recalc()" oninput="recalc()"></div>
+
+      <!-- Row: PI Years -->
+      <div class="cell-label alt">שנים קרן + ריבית (P+I)</div>
+      <div class="cell-value green-cell"><input class="green-input" id="piYears_0" type="number" value="15" onchange="recalc()" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="piYears_1" type="number" value="15" onchange="recalc()" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="piYears_2" type="number" value="15" onchange="recalc()" oninput="recalc()"></div>
+
+      <!-- Section: תרחיש -->
+      <div class="section-title">תרחיש</div>
+
+      <!-- Row: שנות החזקה -->
+      <div class="cell-label">שנות החזקה</div>
+      <div class="cell-value green-cell"><input class="green-input" id="holding_0" type="number" value="10" onchange="recalc()" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="holding_1" type="number" value="10" onchange="recalc()" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="holding_2" type="number" value="10" onchange="recalc()" oninput="recalc()"></div>
+
+      <!-- Section: כמה אני שם? -->
+      <div class="section-title">כמה אני שם? (הון עצמי)</div>
+
+      <!-- Row: מחיר הבית -->
+      <div class="cell-label alt">מחיר הבית</div>
+      <div class="cell-value output" id="housePriceOut_0">$230,000</div>
+      <div class="cell-value output" id="housePriceOut_1">$200,000</div>
+      <div class="cell-value output" id="housePriceOut_2">$170,000</div>
+
+      <!-- Row: ליווי השקעה -->
+      <div class="cell-label">ליווי השקעה (אספקט)</div>
+      <div class="cell-value output">$12,000</div>
+      <div class="cell-value output">$12,000</div>
+      <div class="cell-value output">$12,000</div>
+
+      <!-- Row: עלויות סגירה -->
+      <div class="cell-label alt" style="display:flex; align-items:center; justify-content:space-between;">
+        <span>עלויות התאמה + סגירה</span>
+        <span class="toggle-btn-gray" id="btn-closing" onclick="toggleGroup(&#39;closing&#39;)" title="הצג/הסתר פירוט">＋</span>
+      </div>
+      <div class="cell-value gray output" id="closing_0">$9,047</div>
+      <div class="cell-value gray output" id="closing_1">$9,047</div>
+      <div class="cell-value gray output" id="closing_2">$9,047</div>
+
+      <!-- Closing cost breakdown (collapsed by default) -->
+      <div class="cell-label gray group-hidden" data-group="closing" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">הקמת LLC + EIN + אגרה</div>
+      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$800</div>
+      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$800</div>
+      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$800</div>
+
+      <div class="cell-label group-hidden" data-group="closing" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">הקמת הלוואה (עמלה, נקודות)</div>
+      <div class="cell-value group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$2,080</div>
+      <div class="cell-value group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$2,080</div>
+      <div class="cell-value group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$2,080</div>
+
+      <div class="cell-label gray group-hidden" data-group="closing" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">שמאות לנכס</div>
+      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$500</div>
+      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$500</div>
+      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$500</div>
+
+      <div class="cell-label group-hidden" data-group="closing" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">בדק בית</div>
+      <div class="cell-value group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$500</div>
+      <div class="cell-value group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$500</div>
+      <div class="cell-value group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$500</div>
+
+      <div class="cell-label gray group-hidden" data-group="closing" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">תריסים / וילונות</div>
+      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$500</div>
+      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$500</div>
+      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$500</div>
+
+      <div class="cell-label group-hidden" data-group="closing" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">עמלת נאמנות (Escrow)</div>
+      <div class="cell-value group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$600</div>
+      <div class="cell-value group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$600</div>
+      <div class="cell-value group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$600</div>
+
+      <div class="cell-label gray group-hidden" data-group="closing" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">עמלת קבלן / ליווי</div>
+      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$2,000</div>
+      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$2,000</div>
+      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$2,000</div>
+
+      <div class="cell-label group-hidden" data-group="closing" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">סקירה + פוליסה + אגרות + עו"ד</div>
+      <div class="cell-value group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$1,567</div>
+      <div class="cell-value group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$1,567</div>
+      <div class="cell-value group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$1,567</div>
+
+      <div class="cell-label gray group-hidden" data-group="closing" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">עמלת הקמת הלוואה + נקודות</div>
+      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$500</div>
+      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$500</div>
+      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$500</div>
+
+      <!-- Row: עלות רכישה כוללת -->
+      <div class="cell-label">עלות רכישה כוללת</div>
+      <div class="cell-value output" id="totalCost_0">$251,047</div>
+      <div class="cell-value output" id="totalCost_1">$221,047</div>
+      <div class="cell-value output" id="totalCost_2">$191,047</div>
+
+      <!-- Row: משכנתא -->
+      <div class="cell-label alt">משכנתא (לפי אחוז מימון)</div>
+      <div class="cell-value gray output" id="mortgage_0">$0</div>
+      <div class="cell-value gray output" id="mortgage_1">$140,000</div>
+      <div class="cell-value gray output" id="mortgage_2">$110,500</div>
+
+      <!-- Row: דאון פיימנט -->
+      <div class="cell-label">דאון פיימנט</div>
+      <div class="cell-value output" id="downPayment_0">$251,047</div>
+      <div class="cell-value output" id="downPayment_1">$81,047</div>
+      <div class="cell-value output" id="downPayment_2">$80,547</div>
+
+      <!-- Row: הון עצמי נוסף -->
+      <div class="cell-label alt">הון עצמי נוסף (ESCROW + זמין)</div>
+      <div class="cell-value gray output">$10,000</div>
+      <div class="cell-value gray output">$10,000</div>
+      <div class="cell-value gray output">$10,000</div>
+
+      <!-- Row: סה"כ הון עצמי -->
+      <div class="cell-label" style="font-weight:700; background:#fff2cc;">סה"כ הון עצמי נדרש ($)</div>
+      <div class="cell-value yellow" id="totalEquity_0">$261,047</div>
+      <div class="cell-value yellow" id="totalEquity_1">$91,047</div>
+      <div class="cell-value yellow" id="totalEquity_2">$90,547</div>
+
+      <!-- Section: כמה נשאר כל חודש? -->
+      <div class="section-title">כמה נשאר כל חודש?</div>
+
+      <!-- Row: שכירות נכנסת -->
+      <div class="cell-label alt">שכירות חודשית נכנסת</div>
+      <div class="cell-value gray output" id="rentIn_0">$2,000</div>
+      <div class="cell-value gray output" id="rentIn_1">$1,750</div>
+      <div class="cell-value gray output" id="rentIn_2">$1,500</div>
+
+      <!-- Row: הוצאות חודשיות -->
+      <div class="cell-label" style="display:flex; align-items:center; justify-content:space-between;">
+        <span>הוצאות חודשיות (מס+ביטוח+ניהול+HOA+...)</span>
+        <span class="toggle-btn-gray" id="btn-monthly" onclick="toggleGroup(&#39;monthly&#39;)" title="הצג/הסתר פירוט">＋</span>
+      </div>
+      <div class="cell-value output" id="monthlyExp_0">$1,130</div>
+      <div class="cell-value output" id="monthlyExp_1">$1,013</div>
+      <div class="cell-value output" id="monthlyExp_2">$896</div>
+
+      <!-- Row: תשלום מימון -->
+      <div class="cell-label alt">תשלום מימון חודשי (ממוצע)</div>
+      <div class="cell-value gray output" id="monthlyFinancing_0">$0</div>
+      <div class="cell-value gray output" id="monthlyFinancing_1">$989</div>
+      <div class="cell-value gray output" id="monthlyFinancing_2">$781</div>
+
+      <!-- Monthly breakdown (collapsed by default) -->
+      <div class="cell-label group-hidden" data-group="monthly" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">מס רכוש (חודשי)</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="propTaxM_0">$613</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="propTaxM_1">$533</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="propTaxM_2">$453</div>
+
+      <div class="cell-label gray group-hidden" data-group="monthly" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">ביטוח (חודשי)</div>
+      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;">$96</div>
+      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;">$96</div>
+      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;">$96</div>
+
+      <div class="cell-label group-hidden" data-group="monthly" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">ניהול נכס (חודשי)</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="mgmtM_0">$160</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="mgmtM_1">$140</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="mgmtM_2">$120</div>
+
+      <div class="cell-label gray group-hidden" data-group="monthly" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">HOA (חודשי)</div>
+      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;">$75</div>
+      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;">$75</div>
+      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;">$75</div>
+
+      <div class="cell-label group-hidden" data-group="monthly" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">Vacancy (חודשי)</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="vacM_0">$80</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="vacM_1">$70</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="vacM_2">$60</div>
+
+      <div class="cell-label gray group-hidden" data-group="monthly" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">תיקונים ותחזוקה (חודשי)</div>
+      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;">$50</div>
+      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;">$50</div>
+      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;">$50</div>
+
+      <div class="cell-label group-hidden" data-group="monthly" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">החלפת שוכר (חודשי)</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="tenantM_0">$56</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="tenantM_1">$49</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="tenantM_2">$42</div>
+
+      <!-- RESULT ROWS -->
+      <div class="cell-label" style="font-weight:700; background:var(--light-blue-bg);">נשאר 'אוויר' בחשבון (חודשי)</div>
+      <div class="cell-value light-blue positive" id="monthlyCash_0">+$870</div>
+      <div class="cell-value light-blue negative" id="monthlyCash_1">$-252</div>
+      <div class="cell-value light-blue negative" id="monthlyCash_2">$-176</div>
+
+      <div class="cell-label" style="font-weight:700; background:var(--light-blue-bg);">נשאר בשנה</div>
+      <div class="cell-value light-blue positive" id="annualCash_0">+$10,443</div>
+      <div class="cell-value light-blue negative" id="annualCash_1">$-3,021</div>
+      <div class="cell-value light-blue negative" id="annualCash_2">$-2,117</div>
+
+    </div><!-- end scenarios-grid -->
+
+    <!-- Sensitivity Analysis -->
+    <div class="sensitivity-wrapper">
+      <div class="sensitivity-title">📈 רגישות תשואה לפי עליית ערך שנתית</div>
+      <table class="sensitivity-table">
+        <thead>
+          <tr>
+            <th>עליית ערך שנתית</th>
+            <th id="sh0">0% מימון</th>
+            <th id="sh1">70% מימון</th>
+            <th id="sh2">65% מימון</th>
+          </tr>
+        </thead>
+        <tbody id="sensitivityBody"><tr><td>2%</td><td class="neutral">4.9%</td><td class="bad">2.2%</td><td class="bad">2.0%</td></tr><tr><td>4%</td><td class="neutral">7.2%</td><td class="good">8.2%</td><td class="neutral">7.1%</td></tr><tr><td>6%</td><td class="good">9.8%</td><td class="good">15.4%</td><td class="good">13.2%</td></tr><tr><td>8%</td><td class="good">13.0%</td><td class="good">23.8%</td><td class="good">20.5%</td></tr><tr><td>10%</td><td class="good">16.7%</td><td class="good">33.8%</td><td class="good">29.0%</td></tr></tbody>
+      </table>
+      <div class="note">* הוצאות מכירה: 7% מהמכירה | הריבית על המשכנתא: IO בשנים הראשונות, לאחר מכן P+I</div>
+    </div>
+
+  </div><!-- end main-card -->
+
+  <div class="footer-note">
+    כלי זה מיועד להשוואה בין תרחישי השקעה בנדל"ן אמריקאי · כל החישובים הם להמחשה בלבד
+  </div>
+</div>
+
+<script>
+
+// ======= Sync financing from header =======
+function syncFinFromHeader() {
+  recalc();
+}
+
+// ======= Input Formatting Helpers =======
+function unformatInput(el) {
+  el.value = el.value.replace(/,/g, '');
+}
+function formatInput(el) {
+  const num = parseFloat(el.value.replace(/,/g, ''));
+  if (!isNaN(num)) {
+    el.value = Math.round(num).toLocaleString('en-US');
+  }
+}
+
+// ======= Financial Functions =======
+function PMT(rate, nper, pv) {
+  if (rate === 0) return -pv / nper;
+  return rate * pv / (1 - Math.pow(1 + rate, -nper));
+}
+
+function FV(rate, nper, pmt, pv) {
+  if (rate === 0) return -(pv + pmt * nper);
+  return -(pv * Math.pow(1 + rate, nper) + pmt * (Math.pow(1 + rate, nper) - 1) / rate);
+}
+
+// ======= Constants =======
+const PROPERTY_TAX = 0.032;
+const INSURANCE = 1150;
+const MGMT_FEE = 0.08;
+const HOA = 900;
+const VACANCY = 0.04;
+const REPAIRS = 600;
+const TENANT_CHANGE_YEARS = 3;
+const INVESTMENT_FEE = 12000;
+const RESERVE_FUND = 10000;
+
+const CLOSING_COSTS = {
+  llc: 800,
+  loanPoints: 2080,
+  appraisal: 500,
+  inspection: 500,
+  blinds: 500,
+  escrow: 600,
+  contractor: 2000,
+  title: 1567,
+  loanOrigination: 500
+};
+const TOTAL_CLOSING = Object.values(CLOSING_COSTS).reduce((a,b)=>a+b,0); // 9047
+
+const SENSITIVITY_RATES = [0.02, 0.04, 0.06, 0.08, 0.10];
+
+// ======= Formatting =======
+function fmt$(v) {
+  return '$' + Math.round(v).toLocaleString('en-US');
+}
+function fmtPct(v) {
+  return (v * 100).toFixed(1) + '%';
+}
+function fmtSign(v) {
+  const s = Math.round(v);
+  return (s >= 0 ? '+' : '') + '$' + s.toLocaleString('en-US');
+}
+
+function setCell(id, value, extraClass) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = value;
+  if (extraClass) {
+    el.classList.add(extraClass);
+    el.classList.remove(extraClass === 'positive' ? 'negative' : 'positive');
+  }
+}
+
+function setCashCell(id, v) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const s = Math.round(v);
+  el.textContent = fmtSign(v);
+  el.classList.remove('positive','negative');
+  if (s >= 0) el.classList.add('positive');
+  else el.classList.add('negative');
+}
+
+// ======= Main Calculation =======
+function recalc() {
+  const scenarios = [];
+
+  for (let i = 0; i < 3; i++) {
+    const housePrice  = parseFloat(document.getElementById(`housePrice_${i}`).value.replace(/,/g,"")) || 0;
+    const rent        = parseFloat(document.getElementById(`rent_${i}`).value.replace(/,/g,"")) || 0;
+    const rateInput   = parseFloat(document.getElementById(`rate_${i}`).value) || 0;
+    const rate        = rateInput / 100;
+    const ioYears     = parseFloat(document.getElementById(`ioYears_${i}`).value) || 0;
+    const piYears     = parseFloat(document.getElementById(`piYears_${i}`).value) || 0;
+    const finInput    = parseFloat(document.getElementById(`headerFin_${i}`).value) || 0;
+    const financing   = finInput / 100;
+    const holding     = parseFloat(document.getElementById(`holding_${i}`).value) || 0;
+
+    // --- Cost Calculations ---
+    const totalCost    = housePrice + INVESTMENT_FEE + TOTAL_CLOSING;
+    const mortgage     = financing * housePrice;
+    const downPayment  = totalCost - mortgage;
+    const totalEquity  = downPayment + RESERVE_FUND;
+
+    // --- Monthly Expenses ---
+    const monthlyTax    = housePrice * PROPERTY_TAX / 12;
+    const monthlyIns    = INSURANCE / 12;
+    const monthlyMgmt   = rent * MGMT_FEE;
+    const monthlyHOA    = HOA / 12;
+    const monthlyVac    = rent * VACANCY;
+    const monthlyRepairs= REPAIRS / 12;
+    const monthlyTenant = rent / (TENANT_CHANGE_YEARS * 12);
+
+    // Formula: =(B4*B2+B5+B6*B3*12+B3/B10+B7+B8*B3*12+B9)/12
+    const monthlyExp = (PROPERTY_TAX * housePrice + INSURANCE + MGMT_FEE * rent * 12
+                        + rent / TENANT_CHANGE_YEARS + HOA + VACANCY * rent * 12 + REPAIRS) / 12;
+
+    // --- Monthly Financing ---
+    let monthlyFinancing = 0;
+    if (financing > 0) {
+      if (holding <= ioYears) {
+        monthlyFinancing = rate * mortgage / 12;
+      } else {
+        const ioMonths  = Math.min(holding, ioYears);
+        const piMonths  = holding - ioMonths;
+        const ioPay     = rate * mortgage / 12;
+        const piPay     = PMT(rate / 12, piYears * 12, mortgage);
+        monthlyFinancing = (ioMonths * ioPay + piMonths * piPay) / holding;
+      }
+    }
+
+    const monthlyCash = rent - monthlyExp - monthlyFinancing;
+    const annualCash  = monthlyCash * 12;
+
+    scenarios.push({
+      housePrice, rent, rate, ioYears, piYears, financing, holding,
+      totalCost, mortgage, downPayment, totalEquity,
+      monthlyTax, monthlyIns, monthlyMgmt, monthlyHOA, monthlyVac,
+      monthlyRepairs, monthlyTenant, monthlyExp, monthlyFinancing,
+      monthlyCash, annualCash
+    });
+
+    // Update sensitivity table header to match
+    const finLabel = `${Math.round(finInput)}% מימון`;
+    document.getElementById(`sh${i}`).textContent = finLabel;
+
+    // Update cells
+    setCell(`housePriceOut_${i}`, fmt$(housePrice));
+    setCell(`closing_${i}`, fmt$(TOTAL_CLOSING));
+    setCell(`totalCost_${i}`, fmt$(totalCost));
+    setCell(`mortgage_${i}`, fmt$(mortgage));
+    setCell(`downPayment_${i}`, fmt$(downPayment));
+    setCell(`totalEquity_${i}`, fmt$(totalEquity));
+
+    setCell(`rentIn_${i}`, fmt$(rent));
+    setCell(`monthlyExp_${i}`, fmt$(monthlyExp));
+    setCell(`monthlyFinancing_${i}`, fmt$(monthlyFinancing));
+
+    setCell(`propTaxM_${i}`, fmt$(monthlyTax));
+    setCell(`mgmtM_${i}`, fmt$(monthlyMgmt));
+    setCell(`vacM_${i}`, fmt$(monthlyVac));
+    setCell(`tenantM_${i}`, fmt$(monthlyTenant));
+
+    setCashCell(`monthlyCash_${i}`, monthlyCash);
+    setCashCell(`annualCash_${i}`, annualCash);
+  }
+
+  // ======= Sensitivity Table =======
+  const tbody = document.getElementById('sensitivityBody');
+  tbody.innerHTML = '';
+
+  for (const appRate of SENSITIVITY_RATES) {
+    const tr = document.createElement('tr');
+
+    const tdRate = document.createElement('td');
+    tdRate.textContent = (appRate * 100).toFixed(0) + '%';
+    tr.appendChild(tdRate);
+
+    for (let i = 0; i < 3; i++) {
+      const s = scenarios[i];
+      const { housePrice, rate, ioYears, piYears, mortgage, monthlyCash,
+              holding, downPayment, financing } = s;
+
+      const salePrice = housePrice * Math.pow(1 + appRate, holding);
+      const saleCosts = salePrice * 0.07;
+
+      let remainMortgage;
+      if (holding <= ioYears) {
+        remainMortgage = mortgage;
+      } else {
+        remainMortgage = -FV(rate / 12,
+          (holding - ioYears) * 12,
+          -PMT(rate / 12, piYears * 12, mortgage), // negate: PMT returns positive, FV needs negative (outflow)
+          mortgage);
+      }
+
+      // annualReturn = ((salePrice - saleCosts - remainMortgage + annualCash*holding + reserveFund - downPayment) / downPayment) / holding
+      const annualReturn = ((salePrice - saleCosts - remainMortgage
+                             + (monthlyCash * 12 * holding)
+                             + RESERVE_FUND - downPayment) / downPayment) / holding;
+
+      const td = document.createElement('td');
+      const pct = (annualReturn * 100).toFixed(1) + '%';
+      td.textContent = pct;
+      if (annualReturn >= 0.075) td.className = 'good';
+      else if (annualReturn < 0.03) td.className = 'bad';
+      else td.className = 'neutral';
+      tr.appendChild(td);
+    }
+    tbody.appendChild(tr);
+  }
+}
+
+// ======= Default Values =======
+const DEFAULTS = [
+  // Scenario 0: 0% financing | $230k × 10.5% / 12 = $2,013/mo
+  { housePrice: '230,000', rent: '2,000', rate: 6.5, ioYears: 5, piYears: 15, financing: 0,  holding: 10 },
+  // Scenario 1: 70% financing | $200k × 10.5% / 12 = $1,750/mo
+  { housePrice: '200,000', rent: '1,750', rate: 6.5, ioYears: 5, piYears: 15, financing: 70, holding: 10 },
+  // Scenario 2: 65% financing | $170k × 10.5% / 12 = $1,488/mo
+  { housePrice: '170,000', rent: '1,500', rate: 6.5, ioYears: 5, piYears: 15, financing: 65, holding: 10 },
+];
+
+function resetDefaults() {
+  for (let i = 0; i < 3; i++) {
+    const d = DEFAULTS[i];
+    const fields = ['housePrice','rent','rate','ioYears','piYears','holding'];
+    for (const f of fields) {
+      const el = document.getElementById(`${f}_${i}`);
+      if (el) {
+        el.value = d[f];
+        el.classList.remove('input-flash');
+        void el.offsetWidth;
+        el.classList.add('input-flash');
+        setTimeout(() => el.classList.remove('input-flash'), 500);
+      }
+    }
+    // Reset header financing input
+    const headerEl = document.getElementById(`headerFin_${i}`);
+    if (headerEl) {
+      headerEl.value = d.financing;
+    }
+  }
+  recalc();
+}
+
+// ======= Collapsible Groups =======
+function toggleGroup(groupId) {
+  const cells = document.querySelectorAll(`[data-group="${groupId}"]`);
+  const btn   = document.getElementById(`btn-${groupId}`);
+  const isHidden = cells[0].classList.contains('group-hidden');
+
+  cells.forEach(c => {
+    if (isHidden) {
+      c.classList.remove('group-hidden');
+    } else {
+      c.classList.add('group-hidden');
+    }
+  });
+
+  if (btn) btn.textContent = isHidden ? '－' : '＋';
+}
+
+// Run on load
+recalc();
+</script>
+
+
+</body></html>
