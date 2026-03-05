@@ -402,6 +402,119 @@
     border-radius: 0 0 12px 12px;
   }
 
+  /* ===== Heatmap Section ===== */
+  .heatmap-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin-top: 16px;
+    overflow: hidden;
+  }
+  .heatmap-header {
+    background: var(--blue-header);
+    color: white;
+    padding: 14px 20px;
+    font-weight: 700;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+  }
+  .heatmap-header:hover { background: #264a85; }
+  .heatmap-body { padding: 16px 20px; }
+  .heatmap-body.collapsed { display: none; }
+  .heatmap-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    font-size: 0.88rem;
+    flex-wrap: wrap;
+  }
+  .heatmap-controls label { font-weight: 600; color: #374151; }
+  .heatmap-controls input {
+    width: 55px;
+    padding: 5px 8px;
+    border: 2px solid var(--green-border);
+    border-radius: 6px;
+    background: var(--green-bg);
+    text-align: center;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+  .heatmap-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .heatmap-table {
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    min-width: 800px;
+    width: 100%;
+  }
+  .heatmap-table th {
+    background: var(--blue-header);
+    color: white;
+    padding: 7px 6px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.72rem;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  .heatmap-table th:first-child {
+    position: sticky;
+    right: 0;
+    z-index: 3;
+    background: #1a3561;
+    min-width: 60px;
+  }
+  .heatmap-table td {
+    padding: 5px 4px;
+    text-align: center;
+    border: 1px solid rgba(0,0,0,0.06);
+    font-weight: 600;
+    font-size: 0.73rem;
+    white-space: nowrap;
+    transition: transform 0.1s;
+  }
+  .heatmap-table td:hover {
+    transform: scale(1.15);
+    z-index: 5;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    border-radius: 3px;
+  }
+  .heatmap-table td:first-child {
+    background: var(--blue-header) !important;
+    color: white;
+    font-weight: 700;
+    position: sticky;
+    right: 0;
+    z-index: 2;
+    min-width: 60px;
+  }
+  .heatmap-table td:first-child:hover { transform: none; box-shadow: none; }
+  .heatmap-legend {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    font-size: 0.75rem;
+    color: #6b7280;
+    flex-wrap: wrap;
+  }
+  .heatmap-legend-bar {
+    height: 14px;
+    width: 200px;
+    border-radius: 3px;
+    background: linear-gradient(to left, #c00000, #ff6b6b, #ffd4d4, #ffffff, #d4edda, #548235, #006100);
+  }
+
   /* ===== Notes/Beurim Section ===== */
   .notes-card {
     background: white;
@@ -519,6 +632,14 @@
     input.green-input { font-size: 0.82rem; padding: 6px 4px; }
     .header-fin-input { width: 40px; font-size: 0.88rem; }
     .header-fin-label { font-size: 0.85rem; }
+
+    /* Heatmap mobile */
+    .heatmap-body { padding: 10px; }
+    .heatmap-table { font-size: 0.68rem; }
+    .heatmap-table th { font-size: 0.65rem; padding: 5px 3px; }
+    .heatmap-table td { font-size: 0.65rem; padding: 4px 2px; }
+    .heatmap-table td:first-child { box-shadow: -3px 0 6px rgba(0,0,0,0.08); }
+    .heatmap-table th:first-child { box-shadow: -3px 0 6px rgba(0,0,0,0.15); }
 
     /* Sensitivity table mobile */
     .sensitivity-wrapper { padding: 16px 10px; overflow-x: auto; }
@@ -837,6 +958,34 @@
 
   </div><!-- end main-card -->
 
+  <!-- Heatmap Section -->
+  <div class="heatmap-card">
+    <div class="heatmap-header" onclick="toggleHeatmap()">
+      <span>🔥 מפת חום - תשואה שנתית לפי שנות החזקה ואחוז מימון</span>
+      <span class="notes-toggle" id="heatmapToggle">▼</span>
+    </div>
+    <div class="heatmap-body collapsed" id="heatmapBody">
+      <div class="heatmap-controls">
+        <label>עליית ערך שנתית צפויה:</label>
+        <input type="number" id="heatmapAppr" value="4" min="0" max="15" step="0.5" oninput="buildHeatmap()">
+        <span>%</span>
+        <span style="color:#9ca3af; font-size:0.78rem;">(שנה את האחוז כדי לראות איך זה משפיע)</span>
+      </div>
+      <div class="heatmap-scroll">
+        <table class="heatmap-table" id="heatmapTable">
+          <thead id="heatmapHead"></thead>
+          <tbody id="heatmapBody2"></tbody>
+        </table>
+      </div>
+      <div class="heatmap-legend">
+        <span>תשואה שלילית</span>
+        <div class="heatmap-legend-bar"></div>
+        <span>תשואה גבוהה</span>
+      </div>
+      <div class="note" style="margin-top:10px;">* החישוב מבוסס על הנתונים בטבלה למעלה (תרחיש 0% מימון). הוצאות מכירה: 7%</div>
+    </div>
+  </div>
+
   <!-- ביאורים Section -->
   <div class="notes-card">
     <div class="notes-header" onclick="toggleNotes()">
@@ -1113,6 +1262,11 @@ function recalc() {
     }
     tbody.appendChild(tr);
   }
+
+  // Update heatmap if open
+  if (!document.getElementById('heatmapBody').classList.contains('collapsed')) {
+    buildHeatmap();
+  }
 }
 
 // ======= Default Values =======
@@ -1163,6 +1317,146 @@ function toggleGroup(groupId) {
   });
 
   if (btn) btn.textContent = isHidden ? '－' : '＋';
+}
+
+// ======= Heatmap =======
+function toggleHeatmap() {
+  const body = document.getElementById('heatmapBody');
+  const toggle = document.getElementById('heatmapToggle');
+  const wasCollapsed = body.classList.contains('collapsed');
+  body.classList.toggle('collapsed');
+  toggle.textContent = body.classList.contains('collapsed') ? '▼' : '▲';
+  if (wasCollapsed) buildHeatmap(); // build on first open
+}
+
+function heatmapColor(val) {
+  // val is annual ROI as decimal (e.g. 0.05 = 5%)
+  const pct = val * 100;
+  let r, g, b;
+  if (pct < 0) {
+    // Negative: deep red to light red (-20% to 0%)
+    const t = Math.max(0, Math.min(1, (pct + 20) / 20));
+    r = 192 + Math.round(t * 63);  // 192->255
+    g = Math.round(t * 212);       // 0->212
+    b = Math.round(t * 212);       // 0->212
+  } else if (pct <= 3) {
+    // Near zero to low: white to pale green (0% to 3%)
+    const t = pct / 3;
+    r = 255 - Math.round(t * 43);  // 255->212
+    g = 255 - Math.round(t * 18);  // 255->237
+    b = 255 - Math.round(t * 43);  // 255->212
+  } else if (pct <= 8) {
+    // Low to good: light green to medium green (3% to 8%)
+    const t = (pct - 3) / 5;
+    r = 212 - Math.round(t * 128); // 212->84
+    g = 237 - Math.round(t * 107); // 237->130
+    b = 212 - Math.round(t * 159); // 212->53
+  } else if (pct <= 15) {
+    // Good to strong: medium green to deep green (8% to 15%)
+    const t = (pct - 8) / 7;
+    r = 84 - Math.round(t * 84);   // 84->0
+    g = 130 - Math.round(t * 33);  // 130->97
+    b = 53 - Math.round(t * 53);   // 53->0
+  } else {
+    // Excellent: deep green (15%+)
+    r = 0; g = 97; b = 0;
+  }
+  return `rgb(${r},${g},${b})`;
+}
+
+function heatmapTextColor(val) {
+  const pct = val * 100;
+  // White text on very dark or very red backgrounds
+  if (pct < -5 || pct > 10) return '#ffffff';
+  if (pct < 0) return '#4a0000';
+  return '#1a1a2e';
+}
+
+function buildHeatmap() {
+  const head = document.getElementById('heatmapHead');
+  const body = document.getElementById('heatmapBody2');
+  if (!head || !body) return;
+
+  // Read base parameters from scenario 0 inputs
+  const price = parseFloat(document.getElementById('housePrice_0').value.replace(/,/g,'')) || 200000;
+  const rent = parseFloat(document.getElementById('rent_0').value.replace(/,/g,'')) || 1850;
+  const rateInput = parseFloat(document.getElementById('rate_0').value) || 6.5;
+  const rate = rateInput / 100;
+  const ioYears = parseFloat(document.getElementById('ioYears_0').value) || 5;
+  const piYears = parseFloat(document.getElementById('piYears_0').value) || 15;
+  const appr = (parseFloat(document.getElementById('heatmapAppr').value) || 4) / 100;
+
+  const finLevels = [0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65];
+  const maxYears = 30;
+
+  // Build header row
+  let headerHTML = '<tr><th>שנות החזקה</th>';
+  for (const fin of finLevels) {
+    headerHTML += `<th>${Math.round(fin*100)}% ${fin === 0 ? 'מזומן' : 'מימון'}</th>`;
+  }
+  headerHTML += '</tr>';
+  head.innerHTML = headerHTML;
+
+  // Build data rows
+  let bodyHTML = '';
+  for (let yr = 1; yr <= maxYears; yr++) {
+    bodyHTML += `<tr><td>שנה ${yr}</td>`;
+    for (const fin of finLevels) {
+      const totalCost = price + INVESTMENT_FEE + TOTAL_CLOSING;
+      const mortgage = fin * price;
+      const downPayment = totalCost - mortgage;
+
+      if (downPayment <= 0) {
+        bodyHTML += '<td style="background:#eee;color:#999;">-</td>';
+        continue;
+      }
+
+      // Monthly expenses (same formula as main calc)
+      const monthlyExp = (PROPERTY_TAX * price + INSURANCE + MGMT_FEE * rent * 12
+                          + rent / TENANT_CHANGE_YEARS + HOA + VACANCY * rent * 12 + REPAIRS) / 12;
+
+      // Monthly financing - average over holding period
+      let monthlyFinancing = 0;
+      if (fin > 0 && rate > 0) {
+        if (yr <= ioYears) {
+          monthlyFinancing = rate * mortgage / 12;
+        } else {
+          const ioPay = rate * mortgage / 12;
+          const piPay = PMT(rate / 12, piYears * 12, mortgage);
+          monthlyFinancing = (ioYears * ioPay + (yr - ioYears) * piPay) / yr;
+        }
+      }
+
+      const monthlyCash = rent - monthlyExp - monthlyFinancing;
+
+      // Future value & sale
+      const salePrice = price * Math.pow(1 + appr, yr);
+      const saleCosts = salePrice * 0.07;
+
+      // Remaining mortgage
+      let remainMortgage = 0;
+      if (fin > 0 && rate > 0) {
+        if (yr <= ioYears) {
+          remainMortgage = mortgage;
+        } else {
+          remainMortgage = -FV(rate / 12, (yr - ioYears) * 12,
+            -PMT(rate / 12, piYears * 12, mortgage), mortgage);
+        }
+      }
+
+      // Annual ROI
+      const annualROI = ((salePrice - saleCosts - remainMortgage
+                          + (monthlyCash * 12 * yr)
+                          + RESERVE_FUND - downPayment) / downPayment) / yr;
+
+      const bg = heatmapColor(annualROI);
+      const fg = heatmapTextColor(annualROI);
+      const display = (annualROI * 100).toFixed(1) + '%';
+      bodyHTML += `<td style="background:${bg};color:${fg};">${display}</td>`;
+    }
+    bodyHTML += '</tr>';
+  }
+  body.innerHTML = bodyHTML;
 }
 
 // ======= Notes Toggle =======
