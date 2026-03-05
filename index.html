@@ -245,6 +245,13 @@
   .sensitivity-table tr:nth-child(even) td { background: #f8fafc; }
   .sensitivity-table tr:hover td { background: var(--light-blue-bg); }
 
+  .sensitivity-table th:first-child,
+  .sensitivity-table td:first-child {
+    position: sticky;
+    right: 0;
+    z-index: 2;
+  }
+
   .sensitivity-table td:first-child {
     font-weight: 600;
     color: #374151;
@@ -518,6 +525,8 @@
     .sensitivity-table { font-size: 0.78rem; min-width: 500px; }
     .sensitivity-table th { padding: 8px 10px; }
     .sensitivity-table td { padding: 7px 10px; }
+    .sensitivity-table th:first-child,
+    .sensitivity-table td:first-child { box-shadow: -3px 0 6px rgba(0,0,0,0.08); }
   }
 </style>
 </head>
