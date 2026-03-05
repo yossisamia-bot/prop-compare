@@ -117,6 +117,9 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    position: sticky;
+    right: 0;
+    z-index: 2;
   }
 
   .section-title {
@@ -144,6 +147,10 @@
     align-items: center;
     border-bottom: 1px solid #e2e8f0;
     border-right: 1px solid #e2e8f0;
+    background: white;
+    position: sticky;
+    right: 0;
+    z-index: 2;
   }
 
   .cell-label.alt { background: var(--label-bg); }
@@ -495,7 +502,8 @@
       grid-template-columns: 140px minmax(130px, 1fr) minmax(130px, 1fr) minmax(130px, 1fr);
     }
 
-    .cell-label { font-size: 0.75rem; padding: 6px 8px; }
+    .cell-label { font-size: 0.75rem; padding: 6px 8px; box-shadow: -3px 0 6px rgba(0,0,0,0.08); }
+    .scenario-header:first-child { box-shadow: -3px 0 6px rgba(0,0,0,0.15); }
     .cell-value { font-size: 0.8rem; padding: 5px 6px; }
     .section-title { font-size: 0.82rem; padding: 8px 10px; }
     .scenario-header { padding: 10px 6px; font-size: 0.85rem; }
