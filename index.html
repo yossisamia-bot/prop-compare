@@ -649,6 +649,103 @@
     .sensitivity-table th:first-child,
     .sensitivity-table td:first-child { box-shadow: -3px 0 6px rgba(0,0,0,0.08); }
   }
+
+  /* ===== Tab Navigation ===== */
+  .tab-nav {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin-bottom: 12px;
+  }
+  .tab-btn {
+    padding: 8px 24px;
+    border: 2px solid #4472c4;
+    background: white;
+    color: #4472c4;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .tab-btn:first-child { border-radius: 0 8px 8px 0; }
+  .tab-btn:last-child { border-radius: 8px 0 0 8px; }
+  .tab-btn.active {
+    background: #4472c4;
+    color: white;
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ===== Portfolio Table ===== */
+  .portfolio-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    padding: 16px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+  }
+  .portfolio-card h2 {
+    text-align: center;
+    color: #333;
+    font-size: 1.1rem;
+    margin: 0 0 12px;
+  }
+  .ptable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    min-width: 900px;
+  }
+  .ptable th {
+    background: #4472c4;
+    color: white;
+    padding: 8px 6px;
+    text-align: center;
+    white-space: nowrap;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+  }
+  .ptable th.section-sep {
+    background: #365f9e;
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+  }
+  .ptable td {
+    padding: 6px 6px;
+    text-align: center;
+    border-bottom: 1px solid #e8eaed;
+    white-space: nowrap;
+  }
+  .ptable tr:nth-child(even) { background: #f8f9fb; }
+  .ptable tr:hover { background: #eef3fb; }
+  .ptable tr.totals-row {
+    background: #edf2f9 !important;
+    font-weight: 700;
+    border-top: 2px solid #4472c4;
+  }
+  .ptable td.addr {
+    text-align: right;
+    font-size: 0.72rem;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ptable .pos { color: #2e7d32; }
+  .ptable .neg { color: #c62828; }
+  .ptable .highlight {
+    background: #e8f5e9;
+    font-weight: 700;
+    color: #2e7d32;
+  }
+  .portfolio-note {
+    font-size: 0.72rem;
+    color: #888;
+    text-align: center;
+    margin-top: 8px;
+  }
 </style>
 </head>
 <body>
@@ -676,6 +773,14 @@
     </div>
   </header>
 
+  <!-- Tab Navigation -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('calc')">🧮 מחשבון</button>
+    <button class="tab-btn" onclick="switchTab('portfolio')">🏠 תיק נכסים</button>
+  </div>
+
+  <!-- TAB 1: Calculator (existing) -->
+  <div class="tab-content active" id="tab-calc">
   <div class="main-card">
     <div style="text-align:center; padding:12px 16px 4px;">
       <span style="display:inline-block; background:#e8f5e9; color:#2e7d32; font-size:0.82rem; font-weight:600; padding:5px 18px; border-radius:20px; letter-spacing:0.3px;">שנו את השדות הירוקים לקבלת חישוב מיידי</span>
@@ -1040,6 +1145,43 @@
 
     </div>
   </div><!-- end notes-card -->
+  </div><!-- end tab-calc -->
+
+  <!-- TAB 2: Portfolio -->
+  <div class="tab-content" id="tab-portfolio">
+    <div class="portfolio-card">
+      <h2>🏠 תיק נכסים – נתוני אמת (ללא מימון)</h2>
+      <div style="overflow-x:auto;">
+        <table class="ptable" id="portfolioTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>כתובת</th>
+              <th>תאריך</th>
+              <th>מחיר רכישה</th>
+              <th>עלויות סגירה</th>
+              <th>הוצ' אחרי</th>
+              <th>עמלת ליווי</th>
+              <th>סה"כ השקעה</th>
+              <th>שכ"ד / חודש</th>
+              <th>HOA</th>
+              <th>ביטוח</th>
+              <th>מס רכוש</th>
+              <th>ניהול 8%</th>
+              <th>פנוי 4%</th>
+              <th>תחזוקה</th>
+              <th>סה"כ הוצ'</th>
+              <th>נטו / חודש</th>
+              <th>נטו / שנה</th>
+              <th>תשואה</th>
+            </tr>
+          </thead>
+          <tbody id="portfolioBody"></tbody>
+        </table>
+      </div>
+      <div class="portfolio-note">* מס רכוש: 3.2% · ניהול: 8% · פנוי: 4% · תחזוקה+החלפת דייר: $50+17/חודש · עמלת ליווי: $12,000 · ללא מימון · כל הנתונים ממשיים מתוך חוזים חתומים</div>
+    </div>
+  </div><!-- end tab-portfolio -->
 
   <div class="footer-note">
     כלי זה מיועד להשוואה בין תרחישי השקעה בנדל"ן אמריקאי · כל החישובים הם להמחשה בלבד
@@ -1474,6 +1616,132 @@ if (scrollWrapper) {
   scrollWrapper.addEventListener('scroll', function() {
     this.classList.add('scrolled');
   }, { once: true });
+}
+
+// ======= Tab Switching =======
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  const btns = document.querySelectorAll('.tab-btn');
+  if (tab === 'calc') btns[0].classList.add('active');
+  else btns[1].classList.add('active');
+  if (tab === 'portfolio') buildPortfolio();
+}
+
+// ======= Portfolio Data & Calculations =======
+let portfolioBuilt = false;
+function buildPortfolio() {
+  if (portfolioBuilt) return;
+  portfolioBuilt = true;
+
+  const INVEST_FEE = 12000;
+  const POST_PURCHASE = 4146;
+  const TAX_RATE = 0.032;
+  const MGMT = 0.08;
+  const VACANCY_RATE = 0.04;
+  const REPAIRS_ANNUAL = 600;
+  const TENANT_CHG_YRS = 3;
+  const TENANT_CHG_COST = 600;
+
+  const homes = [
+    { addr:'18259 Via Aurelia Dr, New Caney', date:'11/2024', price:190000, closing:1980, rent:1695, hoa:900, ins:1001 },
+    { addr:'18422 Dicarlo Dr, New Caney', date:'02/2025', price:195000, closing:2757, rent:1695, hoa:900, ins:1338 },
+    { addr:'18015 Valle Cupa Ln, New Caney', date:'07/2025', price:200000, closing:2897, rent:1760, hoa:900, ins:986 },
+    { addr:'17966 Valle Cupa Ln, New Caney', date:'09/2025', price:210000, closing:2813, rent:1890, hoa:900, ins:922 },
+    { addr:'17947 Valle Cupa Ln, New Caney', date:'08/2025', price:191100, closing:2878, rent:1760, hoa:900, ins:897 },
+    { addr:'18015 Trepito Ave, New Caney', date:'10/2025', price:200000, closing:1823, rent:1695, hoa:900, ins:922 },
+    { addr:'20927 San Felice Ln, New Caney', date:'10/2025', price:200000, closing:2848, rent:1695, hoa:900, ins:947 },
+    { addr:'18506 Autumn Hts Ln, Crosby', date:'11/2025', price:190000, closing:1000, rent:1800, hoa:2300, ins:1100 },
+    { addr:'18567 Autumn Hts Ln, Crosby', date:'11/2025', price:190000, closing:1000, rent:1850, hoa:2300, ins:1100 }
+  ];
+
+  const f$ = v => '$' + Math.round(v).toLocaleString('en-US');
+  const body = document.getElementById('portfolioBody');
+  let totals = { price:0, closing:0, post:0, fee:0, invest:0, rent:0, hoa:0, ins:0, tax:0, mgmt:0, vac:0, rep:0, exp:0, net:0, annual:0 };
+
+  homes.forEach((h, i) => {
+    const totalInvest = h.price + h.closing + POST_PURCHASE + INVEST_FEE;
+    const mHoa = h.hoa / 12;
+    const mIns = h.ins / 12;
+    const mTax = (h.price * TAX_RATE) / 12;
+    const mMgmt = h.rent * MGMT;
+    const mVac = h.rent * VACANCY_RATE;
+    const mRep = REPAIRS_ANNUAL / 12 + (TENANT_CHG_COST / TENANT_CHG_YRS) / 12;
+    const mExp = mHoa + mIns + mTax + mMgmt + mVac + mRep;
+    const mNet = h.rent - mExp;
+    const aNet = mNet * 12;
+    const capRate = aNet / h.price;
+
+    totals.price += h.price;
+    totals.closing += h.closing;
+    totals.post += POST_PURCHASE;
+    totals.fee += INVEST_FEE;
+    totals.invest += totalInvest;
+    totals.rent += h.rent;
+    totals.hoa += mHoa;
+    totals.ins += mIns;
+    totals.tax += mTax;
+    totals.mgmt += mMgmt;
+    totals.vac += mVac;
+    totals.rep += mRep;
+    totals.exp += mExp;
+    totals.net += mNet;
+    totals.annual += aNet;
+
+    const cls = mNet >= 0 ? 'pos' : 'neg';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${i+1}</td>
+      <td class="addr">${h.addr}</td>
+      <td>${h.date}</td>
+      <td>${f$(h.price)}</td>
+      <td>${f$(h.closing)}</td>
+      <td>${f$(POST_PURCHASE)}</td>
+      <td>${f$(INVEST_FEE)}</td>
+      <td><b>${f$(totalInvest)}</b></td>
+      <td><b>${f$(h.rent)}</b></td>
+      <td>${f$(mHoa)}</td>
+      <td>${f$(mIns)}</td>
+      <td>${f$(mTax)}</td>
+      <td>${f$(mMgmt)}</td>
+      <td>${f$(mVac)}</td>
+      <td>${f$(mRep)}</td>
+      <td>${f$(mExp)}</td>
+      <td class="${cls}"><b>${f$(mNet)}</b></td>
+      <td class="${cls}"><b>${f$(aNet)}</b></td>
+      <td class="highlight">${(capRate*100).toFixed(1)}%</td>
+    `;
+    body.appendChild(tr);
+  });
+
+  // Totals/Average row
+  const n = homes.length;
+  const avgCap = totals.annual / totals.price;
+  const cls2 = totals.net >= 0 ? 'pos' : 'neg';
+  const tr2 = document.createElement('tr');
+  tr2.className = 'totals-row';
+  tr2.innerHTML = `
+    <td colspan="2">סה"כ / ממוצע (${n} נכסים)</td>
+    <td></td>
+    <td>${f$(totals.price)}</td>
+    <td>${f$(totals.closing)}</td>
+    <td>${f$(totals.post)}</td>
+    <td>${f$(totals.fee)}</td>
+    <td><b>${f$(totals.invest)}</b></td>
+    <td><b>${f$(totals.rent)}</b></td>
+    <td>${f$(totals.hoa)}</td>
+    <td>${f$(totals.ins)}</td>
+    <td>${f$(totals.tax)}</td>
+    <td>${f$(totals.mgmt)}</td>
+    <td>${f$(totals.vac)}</td>
+    <td>${f$(totals.rep)}</td>
+    <td>${f$(totals.exp)}</td>
+    <td class="${cls2}"><b>${f$(totals.net)}</b></td>
+    <td class="${cls2}"><b>${f$(totals.annual)}</b></td>
+    <td class="highlight">${(avgCap*100).toFixed(1)}%</td>
+  `;
+  body.appendChild(tr2);
 }
 </script>
 
