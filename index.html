@@ -1614,13 +1614,19 @@ recalc();
 // Show portfolio tab ONLY if ?p=1 in URL
 const urlParams = new URLSearchParams(window.location.search);
 const showPortfolio = urlParams.get('p') === '1';
+// Always hide tab nav - each mode shows its own content
+document.querySelector('.tab-nav').style.display = 'none';
 if (!showPortfolio) {
-  // Hide tab nav and portfolio entirely
-  document.querySelector('.tab-nav').style.display = 'none';
+  // Normal mode: calculator only, portfolio hidden
   document.getElementById('tab-portfolio').style.display = 'none';
 } else {
-  // Auto-switch to portfolio tab when ?p=1
-  switchTab('portfolio');
+  // Portfolio mode: hide calculator, header extras, show portfolio only
+  document.getElementById('tab-calc').style.display = 'none';
+  document.querySelector('.reset-btn').style.display = 'none';
+  document.querySelector('.legend').style.display = 'none';
+  document.querySelector('header h1').textContent = '🏠 תיק נכסים – נתוני אמת';
+  document.getElementById('tab-portfolio').style.display = 'block';
+  buildPortfolio();
 }
 
 // Hide scroll hint after first scroll on mobile
