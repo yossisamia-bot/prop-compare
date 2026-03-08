@@ -1610,6 +1610,19 @@ function toggleNotes() {
 // Run on load
 recalc();
 
+// ======= Portfolio URL Gate =======
+// Show portfolio tab ONLY if ?p=1 in URL
+const urlParams = new URLSearchParams(window.location.search);
+const showPortfolio = urlParams.get('p') === '1';
+if (!showPortfolio) {
+  // Hide tab nav and portfolio entirely
+  document.querySelector('.tab-nav').style.display = 'none';
+  document.getElementById('tab-portfolio').style.display = 'none';
+} else {
+  // Auto-switch to portfolio tab when ?p=1
+  switchTab('portfolio');
+}
+
 // Hide scroll hint after first scroll on mobile
 const scrollWrapper = document.getElementById('gridScrollWrapper');
 if (scrollWrapper) {
