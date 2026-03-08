@@ -1610,6 +1610,9 @@ function toggleNotes() {
 // Run on load
 recalc();
 
+// Pre-declare portfolio flag (needed before buildPortfolio definition)
+var portfolioBuilt = false;
+
 // ======= Portfolio URL Gate =======
 // Show portfolio tab ONLY if ?p=1 in URL
 const urlParams = new URLSearchParams(window.location.search);
@@ -1649,7 +1652,6 @@ function switchTab(tab) {
 }
 
 // ======= Portfolio Data & Calculations =======
-let portfolioBuilt = false;
 function buildPortfolio() {
   if (portfolioBuilt) return;
   portfolioBuilt = true;
