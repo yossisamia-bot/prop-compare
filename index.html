@@ -1741,22 +1741,22 @@ function buildPortfolio() {
   const tr2 = document.createElement('tr');
   tr2.className = 'totals-row';
   tr2.innerHTML = `
-    <td colspan="2">סה"כ / ממוצע (${n} נכסים)</td>
+    <td colspan="2">ממוצע (${n} נכסים)</td>
     <td></td>
-    <td>${f$(totals.price)}</td>
-    <td>${f$(totals.closing)}</td>
-    <td>${f$(totals.post)}</td>
-    <td><b>${f$(totals.invest)}</b></td>
-    <td><b>${f$(totals.rent)}</b></td>
-    <td>${f$(totals.hoa)}</td>
-    <td>${f$(totals.ins)}</td>
-    <td>${f$(totals.tax)}</td>
-    <td>${f$(totals.mgmt)}</td>
-    <td>${f$(totals.vac)}</td>
-    <td>${f$(totals.rep)}</td>
-    <td>${f$(totals.exp)}</td>
-    <td class="${cls2}"><b>${f$(totals.net)}</b></td>
-    <td class="${cls2}"><b>${f$(totals.annual)}</b></td>
+    <td>${f$(totals.price/n)}</td>
+    <td>${f$(totals.closing/n)}</td>
+    <td>${f$(totals.post/n)}</td>
+    <td><b>${f$(totals.invest/n)}</b></td>
+    <td><b>${f$(totals.rent/n)}</b></td>
+    <td>${f$(totals.hoa/n)}</td>
+    <td>${f$(totals.ins/n)}</td>
+    <td>${f$(totals.tax/n)}</td>
+    <td>${f$(totals.mgmt/n)}</td>
+    <td>${f$(totals.vac/n)}</td>
+    <td>${f$(totals.rep/n)}</td>
+    <td>${f$(totals.exp/n)}</td>
+    <td class="${cls2}"><b>${f$(totals.net/n)}</b></td>
+    <td class="${cls2}"><b>${f$(totals.annual/n)}</b></td>
     <td class="highlight">${(avgCap*100).toFixed(1)}%</td>
   `;
   body.appendChild(tr2);
