@@ -1150,7 +1150,7 @@
   <!-- TAB 2: Portfolio -->
   <div class="tab-content" id="tab-portfolio">
     <div class="portfolio-card">
-      <h2>🏠 תיק נכסים – נתוני אמת (ללא מימון)</h2>
+      <h2>🏠 תיק נכסים – רכישות אחרונות שבוצעו</h2>
       <div style="overflow-x:auto;">
         <table class="ptable" id="portfolioTable">
           <thead>
@@ -1161,15 +1161,14 @@
               <th>מחיר רכישה</th>
               <th>עלויות סגירה</th>
               <th>הוצ' אחרי</th>
-              <th>עמלת ליווי</th>
-              <th>סה"כ השקעה</th>
+              <th>מחיר סגירה כולל עמלת ליווי</th>
               <th>שכ"ד / חודש</th>
               <th>HOA</th>
               <th>ביטוח</th>
               <th>מס רכוש</th>
               <th>ניהול 8%</th>
-              <th>פנוי 4%</th>
-              <th>תחזוקה</th>
+              <th>פנוי 4%*</th>
+              <th>תחזוקה*</th>
               <th>סה"כ הוצ'</th>
               <th>נטו / חודש</th>
               <th>נטו / שנה</th>
@@ -1180,6 +1179,7 @@
         </table>
       </div>
       <div class="portfolio-note">* מס רכוש: 3.2% · ניהול: 8% · פנוי: 4% · תחזוקה+החלפת דייר: $50+17/חודש · עמלת ליווי: $12,000 · ללא מימון · כל הנתונים ממשיים מתוך חוזים חתומים</div>
+      <div class="portfolio-note">* בפועל אלו הוצאות שלא הוצאו – זו "קופה" שמייצרת חיסכון בצד לכל מקרה קדימה.</div>
     </div>
   </div><!-- end tab-portfolio -->
 
@@ -1719,7 +1719,6 @@ function buildPortfolio() {
       <td>${f$(h.price)}</td>
       <td>${f$(h.closing)}</td>
       <td>${f$(POST_PURCHASE)}</td>
-      <td>${f$(INVEST_FEE)}</td>
       <td><b>${f$(totalInvest)}</b></td>
       <td><b>${f$(h.rent)}</b></td>
       <td>${f$(mHoa)}</td>
@@ -1748,7 +1747,6 @@ function buildPortfolio() {
     <td>${f$(totals.price)}</td>
     <td>${f$(totals.closing)}</td>
     <td>${f$(totals.post)}</td>
-    <td>${f$(totals.fee)}</td>
     <td><b>${f$(totals.invest)}</b></td>
     <td><b>${f$(totals.rent)}</b></td>
     <td>${f$(totals.hoa)}</td>
