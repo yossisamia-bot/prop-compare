@@ -1692,7 +1692,7 @@ function buildPortfolio() {
     const mExp = mHoa + mIns + mTax + mMgmt + mVac + mRep;
     const mNet = h.rent - mExp;
     const aNet = mNet * 12;
-    const capRate = aNet / h.price;
+    const capRate = aNet / totalInvest;
 
     totals.price += h.price;
     totals.closing += h.closing;
@@ -1736,7 +1736,7 @@ function buildPortfolio() {
 
   // Totals/Average row
   const n = homes.length;
-  const avgCap = totals.annual / totals.price;
+  const avgCap = totals.annual / totals.invest;
   const cls2 = totals.net >= 0 ? 'pos' : 'neg';
   const tr2 = document.createElement('tr');
   tr2.className = 'totals-row';
