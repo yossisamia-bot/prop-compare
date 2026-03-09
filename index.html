@@ -1158,7 +1158,7 @@
               <th>#</th>
               <th>כתובת</th>
               <th>תאריך</th>
-              <th>מחיר רכישה</th>
+              <th>מחיר רכישה (כולל ליווי)</th>
               <th>עלויות סגירה</th>
               <th>הוצ' אחרי</th>
               <th>מחיר סגירה כולל עמלת ליווי</th>
@@ -1178,7 +1178,7 @@
           <tbody id="portfolioBody"></tbody>
         </table>
       </div>
-      <div class="portfolio-note">* מס רכוש: 3.2% · ניהול: 8% · פנוי: 4% · תחזוקה+החלפת דייר: $50+17/חודש · עמלת ליווי: $12,000 · ללא מימון · כל הנתונים ממשיים מתוך חוזים חתומים</div>
+      <div class="portfolio-note">ללא מימון · כל הנתונים ממשיים מתוך חוזים חתומים</div>
       <div class="portfolio-note">* בפועל אלו הוצאות שלא הוצאו – זו "קופה" שמייצרת חיסכון בצד לכל מקרה קדימה.</div>
     </div>
   </div><!-- end tab-portfolio -->
@@ -1682,7 +1682,7 @@ function buildPortfolio() {
   let totals = { price:0, closing:0, post:0, fee:0, invest:0, rent:0, hoa:0, ins:0, tax:0, mgmt:0, vac:0, rep:0, exp:0, net:0, annual:0 };
 
   homes.forEach((h, i) => {
-    const totalInvest = h.price + h.closing + POST_PURCHASE + INVEST_FEE;
+    const totalInvest = h.price + h.closing + POST_PURCHASE;
     const mHoa = h.hoa / 12;
     const mIns = h.ins / 12;
     const mTax = (h.price * TAX_RATE) / 12;
@@ -1697,7 +1697,6 @@ function buildPortfolio() {
     totals.price += h.price;
     totals.closing += h.closing;
     totals.post += POST_PURCHASE;
-    totals.fee += INVEST_FEE;
     totals.invest += totalInvest;
     totals.rent += h.rent;
     totals.hoa += mHoa;
