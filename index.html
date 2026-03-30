@@ -1545,7 +1545,7 @@ function buildHeatmap() {
   // Build header row
   let headerHTML = '<tr><th>שנות החזקה</th>';
   for (const fin of finLevels) {
-    headerHTML += `<th>${Math.round(fin*100)}% ${fin === 0 ? 'מזומן' : 'מימון'}</th>`;
+    headerHTML += `<th>${Math.round(fin*100)}% מימון</th>`;
   }
   headerHTML += '</tr>';
   head.innerHTML = headerHTML;
