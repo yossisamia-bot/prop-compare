@@ -840,9 +840,9 @@
 
       <!-- Row: HOA -->
       <div class="cell-label">HOA שנתי</div>
-      <div class="cell-value output" id="hoa_0">$900</div>
-      <div class="cell-value output" id="hoa_1">$900</div>
-      <div class="cell-value output" id="hoa_2">$900</div>
+      <div class="cell-value green-cell"><input class="green-input" id="hoa_0" type="text" value="900" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="hoa_1" type="text" value="900" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="hoa_2" type="text" value="900" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
 
       <!-- Row: Vacancy -->
       <div class="cell-label alt">Vacancy (%)</div>
@@ -936,9 +936,9 @@
       <div class="cell-value group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$600</div>
 
       <div class="cell-label gray group-hidden" data-group="closing" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">עמלת קבלן / ליווי</div>
-      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$2,000</div>
-      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$2,000</div>
-      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$2,000</div>
+      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$4,500</div>
+      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$4,500</div>
+      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$4,500</div>
 
       <div class="cell-label group-hidden" data-group="closing" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">סקירה + פוליסה + אגרות + עו"ד</div>
       <div class="cell-value group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$1,567</div>
@@ -1229,7 +1229,7 @@ function FV(rate, nper, pmt, pv) {
 const PROPERTY_TAX = 0.032;
 const INSURANCE = 1150;
 const MGMT_FEE = 0.08;
-const HOA = 900;
+let HOA = 900;
 const VACANCY = 0.04;
 const REPAIRS = 600;
 const TENANT_CHANGE_YEARS = 3;
@@ -1243,7 +1243,7 @@ const CLOSING_COSTS = {
   inspection: 500,
   blinds: 500,
   escrow: 600,
-  contractor: 2000,
+  contractor: 4500,
   title: 1567,
   loanOrigination: 500
 };
@@ -1308,17 +1308,18 @@ function recalc() {
     const totalEquity  = downPayment + RESERVE_FUND;
 
     // --- Monthly Expenses ---
+    const colHOA        = parseNum(document.getElementById(`hoa_${i}`).value) || HOA;
     const monthlyTax    = housePrice * PROPERTY_TAX / 12;
     const monthlyIns    = INSURANCE / 12;
     const monthlyMgmt   = rent * MGMT_FEE;
-    const monthlyHOA    = HOA / 12;
+    const monthlyHOA    = colHOA / 12;
     const monthlyVac    = rent * VACANCY;
     const monthlyRepairs= REPAIRS / 12;
     const monthlyTenant = rent / (TENANT_CHANGE_YEARS * 12);
 
     // Formula: =(B4*B2+B5+B6*B3*12+B3/B10+B7+B8*B3*12+B9)/12
     const monthlyExp = (PROPERTY_TAX * housePrice + INSURANCE + MGMT_FEE * rent * 12
-                        + rent / TENANT_CHANGE_YEARS + HOA + VACANCY * rent * 12 + REPAIRS) / 12;
+                        + rent / TENANT_CHANGE_YEARS + colHOA + VACANCY * rent * 12 + REPAIRS) / 12;
 
     // --- Monthly Financing ---
     let monthlyFinancing = 0;
