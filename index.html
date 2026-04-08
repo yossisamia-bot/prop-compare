@@ -1308,7 +1308,7 @@ function recalc() {
     const totalEquity  = downPayment + RESERVE_FUND;
 
     // --- Monthly Expenses ---
-    const colHOA        = parseNum(document.getElementById(`hoa_${i}`).value) || HOA;
+    const colHOA        = parseFloat(document.getElementById(`hoa_${i}`).value.replace(/,/g,"")) || HOA;
     const monthlyTax    = housePrice * PROPERTY_TAX / 12;
     const monthlyIns    = INSURANCE / 12;
     const monthlyMgmt   = rent * MGMT_FEE;
