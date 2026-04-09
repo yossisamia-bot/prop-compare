@@ -737,11 +737,12 @@
   .ptable td.addr a { color: #1a56db; text-decoration: none; }
   .ptable td.addr a:hover { text-decoration: underline; }
   .ptable .zillow-btn {
-    display: inline-block; margin-right: 4px; background: #006aff; color: #fff !important;
-    font-size: 0.6rem; font-weight: 700; padding: 1px 4px; border-radius: 3px;
-    text-decoration: none !important; vertical-align: middle; line-height: 1.2;
+    display: inline-block; background: #006aff; color: #fff !important;
+    font-size: 0.55rem; font-weight: 700; padding: 2px 5px; border-radius: 4px;
+    text-decoration: none !important; line-height: 1.1;
   }
   .ptable .zillow-btn:hover { background: #0050cc; }
+  .ptable .zcol { padding: 2px; text-align: center; width: 24px; }
   .ptable td.addr {
     text-align: right;
     font-size: 0.72rem;
@@ -1173,6 +1174,7 @@
             <tr>
               <th>#</th>
               <th>כתובת</th>
+              <th style="width:24px;padding:2px;"></th>
               <th>תאריך</th>
               <th>מחיר רכישה (כולל ליווי)</th>
               <th>עלויות סגירה</th>
@@ -1738,7 +1740,8 @@ function buildPortfolio() {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${i+1}</td>
-      <td class="addr"><a href="https://www.google.com/maps/search/${encodeURIComponent(h.addr + ', TX')}" target="_blank" title="פתח במפות">${h.addr}</a> <a href="https://www.zillow.com/homes/${encodeURIComponent(h.addr.replace(/ /g,'-'))}_rb/" target="_blank" class="zillow-btn" title="Zillow">Z</a></td>
+      <td class="addr"><a href="https://www.google.com/maps/search/${encodeURIComponent(h.addr + ', TX')}" target="_blank" title="פתח במפות">${h.addr}</a></td>
+      <td class="zcol"><a href="https://www.zillow.com/homes/${encodeURIComponent(h.addr.replace(/ /g,'-'))}_rb/" target="_blank" class="zillow-btn" title="Zillow">Z</a></td>
       <td>${h.date}</td>
       <td>${f$(h.price)}</td>
       <td>${f$(h.closing)}</td>
@@ -1766,7 +1769,7 @@ function buildPortfolio() {
   const tr2 = document.createElement('tr');
   tr2.className = 'totals-row';
   tr2.innerHTML = `
-    <td colspan="2">ממוצע (${n} נכסים)</td>
+    <td colspan="3">ממוצע (${n} נכסים)</td>
     <td></td>
     <td>${f$(totals.price/n)}</td>
     <td>${f$(totals.closing/n)}</td>
