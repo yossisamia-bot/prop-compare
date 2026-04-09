@@ -734,6 +734,14 @@
     font-weight: 700;
     border-top: 2px solid #4472c4;
   }
+  .ptable td.addr a { color: #1a56db; text-decoration: none; }
+  .ptable td.addr a:hover { text-decoration: underline; }
+  .ptable .zillow-btn {
+    display: inline-block; margin-right: 4px; background: #006aff; color: #fff !important;
+    font-size: 0.6rem; font-weight: 700; padding: 1px 4px; border-radius: 3px;
+    text-decoration: none !important; vertical-align: middle; line-height: 1.2;
+  }
+  .ptable .zillow-btn:hover { background: #0050cc; }
   .ptable td.addr {
     text-align: right;
     font-size: 0.72rem;
@@ -1731,7 +1739,7 @@ function buildPortfolio() {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${i+1}</td>
-      <td class="addr">${h.addr}</td>
+      <td class="addr"><a href="https://www.google.com/maps/search/${encodeURIComponent(h.addr + ', TX')}" target="_blank" title="פתח במפות">${h.addr}</a> <a href="https://www.zillow.com/homes/${encodeURIComponent(h.addr.replace(/ /g,'-'))}_rb/" target="_blank" class="zillow-btn" title="Zillow">Z</a></td>
       <td>${h.date}</td>
       <td>${f$(h.price)}</td>
       <td>${f$(h.closing)}</td>
