@@ -734,20 +734,12 @@
     font-weight: 700;
     border-top: 2px solid #4472c4;
   }
-  .ptable td.addr a { color: #1a56db; text-decoration: none; }
-  .ptable td.addr a:hover { text-decoration: underline; }
-  .ptable .zillow-btn {
-    display: inline-block; background: #006aff; color: #fff !important;
-    font-size: 0.55rem; font-weight: 700; padding: 2px 5px; border-radius: 4px;
-    text-decoration: none !important; line-height: 1.1;
-  }
-  .ptable .zillow-btn:hover { background: #0050cc; }
-  .ptable .zcol { padding: 2px; text-align: center; width: 24px; }
   .ptable td.addr {
     text-align: right;
     font-size: 0.72rem;
-    max-width: 220px;
-    white-space: nowrap;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .ptable .pos { color: #2e7d32; }
   .ptable .neg { color: #c62828; }
@@ -953,11 +945,6 @@
       <div class="cell-value group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$1,567</div>
       <div class="cell-value group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$1,567</div>
 
-      <div class="cell-label gray group-hidden" data-group="closing" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">עמלת הקמת הלוואה + נקודות</div>
-      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$500</div>
-      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$500</div>
-      <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$500</div>
-
       <!-- Row: עלות רכישה כוללת -->
       <div class="cell-label">עלות רכישה כוללת</div>
       <div class="cell-value output" id="totalCost_0">$251,047</div>
@@ -1077,7 +1064,6 @@
         <tbody id="sensitivityBody"><tr><td>2%</td><td class="neutral">4.9%</td><td class="bad">2.2%</td><td class="bad">2.0%</td></tr><tr><td>4%</td><td class="neutral">7.2%</td><td class="good">8.2%</td><td class="neutral">7.1%</td></tr><tr><td>6%</td><td class="good">9.8%</td><td class="good">15.4%</td><td class="good">13.2%</td></tr><tr><td>8%</td><td class="good">13.0%</td><td class="good">23.8%</td><td class="good">20.5%</td></tr><tr><td>10%</td><td class="good">16.7%</td><td class="good">33.8%</td><td class="good">29.0%</td></tr></tbody>
       </table>
       <div class="note">* הוצאות מכירה: 7% מהמכירה | הריבית על המשכנתא: I.O בשנים הראשונות, לאחר מכן P+I</div>
-      <div class="note" style="margin-top:4px; font-size:0.65rem; color:#9ca3af;">תשואות הכוללות עליית ערך ומינוף עשויות להיראות גבוהות — אין בהן מס רווח הון, והן מבוססות על הנחת עליית ערך קבועה</div>
     </div>
 
   </div><!-- end main-card -->
@@ -1174,7 +1160,6 @@
             <tr>
               <th>#</th>
               <th>כתובת</th>
-              <th style="width:24px;padding:2px;"></th>
               <th>תאריך</th>
               <th>מחיר רכישה (כולל ליווי)</th>
               <th>עלויות סגירה</th>
@@ -1254,10 +1239,9 @@ const CLOSING_COSTS = {
   blinds: 500,
   escrow: 600,
   contractor: 2000,
-  title: 1567,
-  loanOrigination: 500
+  title: 1567
 };
-const TOTAL_CLOSING = Object.values(CLOSING_COSTS).reduce((a,b)=>a+b,0); // 9047
+const TOTAL_CLOSING = Object.values(CLOSING_COSTS).reduce((a,b)=>a+b,0); // 8547
 
 const SENSITIVITY_RATES = [0.02, 0.04, 0.06, 0.08, 0.10];
 
@@ -1318,7 +1302,7 @@ function recalc() {
     const totalEquity  = downPayment + RESERVE_FUND;
 
     // --- Monthly Expenses ---
-    const colHOA        = parseFloat(document.getElementById(`hoa_${i}`).value.replace(/,/g,"")) || HOA;
+    const colHOA        = parseNum(document.getElementById(`hoa_${i}`).value) || HOA;
     const monthlyTax    = housePrice * PROPERTY_TAX / 12;
     const monthlyIns    = INSURANCE / 12;
     const monthlyMgmt   = rent * MGMT_FEE;
@@ -1551,7 +1535,7 @@ function buildHeatmap() {
   const appr = 0.04;
 
   const finLevels = [0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65];
-  const maxYears = 18;
+  const maxYears = 30;
 
   // Build header row
   let headerHTML = '<tr><th>שנות החזקה</th>';
@@ -1740,8 +1724,7 @@ function buildPortfolio() {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${i+1}</td>
-      <td class="addr"><a href="https://www.google.com/maps/search/${encodeURIComponent(h.addr + ', TX')}" target="_blank" title="פתח במפות">${h.addr}</a></td>
-      <td class="zcol"><a href="https://www.zillow.com/homes/${encodeURIComponent(h.addr.replace(/ /g,'-'))}_rb/" target="_blank" class="zillow-btn" title="Zillow">Z</a></td>
+      <td class="addr">${h.addr}</td>
       <td>${h.date}</td>
       <td>${f$(h.price)}</td>
       <td>${f$(h.closing)}</td>
@@ -1769,7 +1752,7 @@ function buildPortfolio() {
   const tr2 = document.createElement('tr');
   tr2.className = 'totals-row';
   tr2.innerHTML = `
-    <td colspan="3">ממוצע (${n} נכסים)</td>
+    <td colspan="2">ממוצע (${n} נכסים)</td>
     <td></td>
     <td>${f$(totals.price/n)}</td>
     <td>${f$(totals.closing/n)}</td>
