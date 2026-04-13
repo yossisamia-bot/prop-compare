@@ -1057,8 +1057,8 @@
           <tr>
             <th>עליית ערך שנתית</th>
             <th id="sh0">0% מימון</th>
-            <th id="sh1">70% מימון</th>
-            <th id="sh2">65% מימון</th>
+            <th id="sh1">50% מימון</th>
+            <th id="sh2">70% מימון</th>
           </tr>
         </thead>
         <tbody id="sensitivityBody"><tr><td>2%</td><td class="neutral">4.9%</td><td class="bad">2.2%</td><td class="bad">2.0%</td></tr><tr><td>4%</td><td class="neutral">7.2%</td><td class="good">8.2%</td><td class="neutral">7.1%</td></tr><tr><td>6%</td><td class="good">9.8%</td><td class="good">15.4%</td><td class="good">13.2%</td></tr><tr><td>8%</td><td class="good">13.0%</td><td class="good">23.8%</td><td class="good">20.5%</td></tr><tr><td>10%</td><td class="good">16.7%</td><td class="good">33.8%</td><td class="good">29.0%</td></tr></tbody>
@@ -1302,7 +1302,7 @@ function recalc() {
     const totalEquity  = downPayment + RESERVE_FUND;
 
     // --- Monthly Expenses ---
-    const colHOA        = parseNum(document.getElementById(`hoa_${i}`).value) || HOA;
+    const colHOA        = parseFloat((document.getElementById(`hoa_${i}`).value || '').replace(/,/g, '')) || HOA;
     const monthlyTax    = housePrice * PROPERTY_TAX / 12;
     const monthlyIns    = INSURANCE / 12;
     const monthlyMgmt   = rent * MGMT_FEE;
