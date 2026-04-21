@@ -12,6 +12,15 @@
   gtag('js', new Date());
   gtag('config', 'G-S1E7F8WCWF', { page_title: location.search.includes('p=1') ? 'Portfolio' : 'Calculator' });
 </script>
+<!-- Microsoft Clarity — heatmaps + session recordings. Replace PASTE_CLARITY_PROJECT_ID after signup at clarity.microsoft.com -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    if (i === 'PASTE_CLARITY_PROJECT_ID') return; // skip until configured
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "PASTE_CLARITY_PROJECT_ID");
+</script>
 <style>
   :root {
     --green-bg: #c6efce;
@@ -816,7 +825,7 @@
       <div class="scenario-header" id="h2"><input class="header-fin-input" id="headerFin_2" type="number" value="70" min="0" max="100" onchange="syncFinFromHeader()" oninput="syncFinFromHeader()"><span class="header-fin-label">% מימון</span></div>
 
       <!-- Section: נתוני קלט -->
-      <div class="section-title">נתוני קלט (שדות ירוקים – ניתנים לשינוי)</div>
+      <div class="section-title" data-track="inputs">נתוני קלט (שדות ירוקים – ניתנים לשינוי)</div>
 
       <!-- Row: מחיר בית -->
       <div class="cell-label alt">מחיר בית</div>
@@ -831,7 +840,7 @@
       <div class="cell-value green-cell"><input class="green-input" id="rent_2" type="text" value="1,850" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
 
       <!-- Fixed costs section header -->
-      <div class="section-title">הוצאות שנתיות (קבועות)</div>
+      <div class="section-title" data-track="fixed_costs">הוצאות שנתיות (קבועות)</div>
 
       <!-- Row: מס רכוש -->
       <div class="cell-label alt">מס רכוש (%)</div>
@@ -864,7 +873,7 @@
       <div class="cell-value gray output" id="vac_2">4.0%</div>
 
       <!-- Section: מימון -->
-      <div class="section-title">פרמטרי מימון</div>
+      <div class="section-title" data-track="financing">פרמטרי מימון</div>
 
       <!-- Row: ריבית -->
       <div class="cell-label alt">ריבית צפויה</div>
@@ -885,7 +894,7 @@
       <div class="cell-value green-cell"><input class="green-input" id="piYears_2" type="number" value="15" onchange="recalc()" oninput="recalc()"></div>
 
       <!-- Section: תרחיש -->
-      <div class="section-title">תרחיש</div>
+      <div class="section-title" data-track="scenario">תרחיש</div>
 
       <!-- Row: שנות החזקה -->
       <div class="cell-label">שנות החזקה</div>
@@ -894,7 +903,7 @@
       <div class="cell-value green-cell"><input class="green-input" id="holding_2" type="number" value="10" onchange="recalc()" oninput="recalc()"></div>
 
       <!-- Section: כמה אני שם? -->
-      <div class="section-title">כמה אני שם? (הון עצמי)</div>
+      <div class="section-title" data-track="equity">כמה אני שם? (הון עצמי)</div>
 
       <!-- Row: מחיר הבית -->
       <div class="cell-label alt">מחיר הבית</div>
@@ -989,7 +998,7 @@
       <div class="cell-value yellow" id="totalEquity_2">$90,547</div>
 
       <!-- Section: כמה נשאר כל חודש? -->
-      <div class="section-title">כמה נשאר כל חודש?</div>
+      <div class="section-title" data-track="monthly_cash">כמה נשאר כל חודש?</div>
 
       <!-- Row: שכירות נכנסת -->
       <div class="cell-label alt">שכירות חודשית נכנסת</div>
@@ -1063,7 +1072,7 @@
     </div><!-- end grid-scroll-wrapper -->
 
     <!-- Sensitivity Analysis -->
-    <div class="sensitivity-wrapper">
+    <div class="sensitivity-wrapper" data-track="sensitivity">
       <div class="sensitivity-title">📈 רגישות תשואה לפי עליית ערך שנתית</div>
       <table class="sensitivity-table">
         <thead>
@@ -1082,7 +1091,7 @@
   </div><!-- end main-card -->
 
   <!-- Heatmap Section -->
-  <div class="heatmap-card">
+  <div class="heatmap-card" data-track="heatmap">
     <div class="heatmap-header" onclick="toggleHeatmap()">
       <span>🔥 מפת חום - תשואה שנתית לפי שנות החזקה ואחוז מימון</span>
       <span class="notes-toggle" id="heatmapToggle">▼</span>
@@ -1107,7 +1116,7 @@
   </div>
 
   <!-- ביאורים Section -->
-  <div class="notes-card">
+  <div class="notes-card" data-track="notes">
     <div class="notes-header" onclick="toggleNotes()">
       <span>📋 ביאורים והערות</span>
       <span class="notes-toggle" id="notesToggle">▼</span>
@@ -1796,6 +1805,70 @@ function buildPortfolio() {
   `;
   body.appendChild(tr2);
 }
+
+// ======= Engagement Tracking (scroll depth + section dwell) =======
+(function() {
+  if (typeof gtag !== 'function') return;
+
+  // --- Scroll depth milestones ---
+  const milestones = [25, 50, 75, 100];
+  const fired = new Set();
+  function onScroll() {
+    const docH = document.documentElement.scrollHeight - window.innerHeight;
+    if (docH <= 0) return;
+    const pct = Math.round((window.scrollY / docH) * 100);
+    milestones.forEach(m => {
+      if (pct >= m && !fired.has(m)) {
+        fired.add(m);
+        gtag('event', 'scroll_depth', { percent: m });
+      }
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // --- Section dwell time via IntersectionObserver ---
+  const dwellMs = Object.create(null);
+  const activeAt = Object.create(null);
+  const now = () => performance.now();
+
+  function enter(name) {
+    if (activeAt[name]) return;
+    activeAt[name] = now();
+  }
+  function leave(name) {
+    if (!activeAt[name]) return;
+    dwellMs[name] = (dwellMs[name] || 0) + (now() - activeAt[name]);
+    delete activeAt[name];
+  }
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const name = e.target.getAttribute('data-track');
+      if (!name) return;
+      if (e.isIntersecting) enter(name);
+      else leave(name);
+    });
+  }, { threshold: 0.15, rootMargin: '-10% 0px -10% 0px' });
+
+  document.querySelectorAll('[data-track]').forEach(el => io.observe(el));
+
+  // When the user hides the tab or leaves the page, flush dwell to GA4
+  function flush() {
+    Object.keys(activeAt).forEach(leave);
+    Object.entries(dwellMs).forEach(([name, ms]) => {
+      const seconds = Math.round(ms / 1000);
+      if (seconds >= 2) {
+        gtag('event', 'section_dwell', { section_name: name, seconds });
+      }
+      dwellMs[name] = 0;
+    });
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') flush();
+  });
+  window.addEventListener('pagehide', flush);
+})();
 </script>
 
 
