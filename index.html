@@ -208,9 +208,22 @@
     background: #b8f0c0;
   }
 
+  input.green-input:disabled {
+    background: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+    font-weight: 500;
+  }
+  input.green-input:disabled:hover {
+    background: #e5e7eb;
+  }
+
   .cell-value.green-cell {
     background: var(--green-bg);
     padding: 4px 8px;
+  }
+  .cell-value.green-cell.disabled-cell {
+    background: #e5e7eb;
   }
 
   /* Sensitivity table */
@@ -1294,6 +1307,15 @@ function recalc() {
     const finInput    = parseFloat(document.getElementById(`headerFin_${i}`).value) || 0;
     const financing   = finInput / 100;
     const holding     = parseFloat(document.getElementById(`holding_${i}`).value) || 0;
+
+    // When financing is 0% (all cash), gray out & disable loan-related inputs.
+    const loanInactive = financing === 0;
+    ['rate', 'ioYears', 'piYears'].forEach(field => {
+      const inp = document.getElementById(`${field}_${i}`);
+      if (!inp) return;
+      inp.disabled = loanInactive;
+      inp.parentElement.classList.toggle('disabled-cell', loanInactive);
+    });
 
     // --- Cost Calculations ---
     // When financing is 0% (all cash), skip loan origination points — they're a lender fee.
