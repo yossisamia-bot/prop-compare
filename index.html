@@ -877,21 +877,21 @@
 
       <!-- Row: ריבית -->
       <div class="cell-label alt">ריבית צפויה</div>
-      <div class="cell-value green-cell"><input class="green-input" id="rate_0" type="number" value="6.5" step="0.1" onchange="recalc()" oninput="recalc()"></div>
-      <div class="cell-value green-cell"><input class="green-input" id="rate_1" type="number" value="6.5" step="0.1" onchange="recalc()" oninput="recalc()"></div>
-      <div class="cell-value green-cell"><input class="green-input" id="rate_2" type="number" value="6.5" step="0.1" onchange="recalc()" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="rate_0" type="number" value="6.7" step="0.1" onchange="recalc()" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="rate_1" type="number" value="6.7" step="0.1" onchange="recalc()" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="rate_2" type="number" value="6.7" step="0.1" onchange="recalc()" oninput="recalc()"></div>
 
       <!-- Row: IO Years -->
       <div class="cell-label">שנים ריבית בלבד</div>
-      <div class="cell-value green-cell"><input class="green-input" id="ioYears_0" type="number" value="5" onchange="recalc()" oninput="recalc()"></div>
-      <div class="cell-value green-cell"><input class="green-input" id="ioYears_1" type="number" value="5" onchange="recalc()" oninput="recalc()"></div>
-      <div class="cell-value green-cell"><input class="green-input" id="ioYears_2" type="number" value="5" onchange="recalc()" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="ioYears_0" type="number" value="0" onchange="recalc()" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="ioYears_1" type="number" value="0" onchange="recalc()" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="ioYears_2" type="number" value="0" onchange="recalc()" oninput="recalc()"></div>
 
       <!-- Row: PI Years -->
       <div class="cell-label alt">שנים קרן + ריבית (P+I)</div>
-      <div class="cell-value green-cell"><input class="green-input" id="piYears_0" type="number" value="15" onchange="recalc()" oninput="recalc()"></div>
-      <div class="cell-value green-cell"><input class="green-input" id="piYears_1" type="number" value="15" onchange="recalc()" oninput="recalc()"></div>
-      <div class="cell-value green-cell"><input class="green-input" id="piYears_2" type="number" value="15" onchange="recalc()" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="piYears_0" type="number" value="20" onchange="recalc()" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="piYears_1" type="number" value="20" onchange="recalc()" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="piYears_2" type="number" value="20" onchange="recalc()" oninput="recalc()"></div>
 
       <!-- Section: תרחיש -->
       <div class="section-title" data-track="scenario">תרחיש</div>
@@ -1448,11 +1448,11 @@ function recalc() {
 // ======= Default Values =======
 const DEFAULTS = [
   // Scenario 0: 0% financing | $200k | rent $1,850
-  { housePrice: '200,000', rent: '1,850', rate: 6.5, ioYears: 5, piYears: 15, financing: 0,  holding: 10 },
+  { housePrice: '200,000', rent: '1,850', rate: 6.7, ioYears: 0, piYears: 20, financing: 0,  holding: 10 },
   // Scenario 1: 50% financing | $200k | rent $1,850
-  { housePrice: '200,000', rent: '1,850', rate: 6.5, ioYears: 5, piYears: 15, financing: 50, holding: 10 },
+  { housePrice: '200,000', rent: '1,850', rate: 6.7, ioYears: 0, piYears: 20, financing: 50, holding: 10 },
   // Scenario 2: 70% financing | $200k | rent $1,850
-  { housePrice: '200,000', rent: '1,850', rate: 6.5, ioYears: 5, piYears: 15, financing: 70, holding: 10 },
+  { housePrice: '200,000', rent: '1,850', rate: 6.7, ioYears: 0, piYears: 20, financing: 70, holding: 10 },
 ];
 
 function resetDefaults() {
