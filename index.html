@@ -1188,6 +1188,7 @@
               <th>הוצ' אחרי</th>
               <th>מחיר סגירה<br>כולל עמלת ליווי</th>
               <th>שכ"ד / חודש</th>
+              <th>שכ"ד / מחיר<br><small style="font-weight:normal; opacity:0.8;">(ללא ליווי)</small></th>
               <th>HOA</th>
               <th>ביטוח</th>
               <th>מס רכוש</th>
@@ -1768,6 +1769,7 @@ function buildPortfolio() {
       <td>${f$(POST_PURCHASE)}</td>
       <td><b>${f$(totalInvest)}</b></td>
       <td><b>${f$(h.rent)}</b></td>
+      <td>${(h.rent / (h.price - 12000) * 100).toFixed(2)}%</td>
       <td>${f$(mHoa)}</td>
       <td>${f$(mIns)}</td>
       <td>${f$(mTax)}</td>
@@ -1796,6 +1798,7 @@ function buildPortfolio() {
     <td>${f$(totals.post/n)}</td>
     <td><b>${f$(totals.invest/n)}</b></td>
     <td><b>${f$(totals.rent/n)}</b></td>
+    <td>${(totals.rent / (totals.price - 12000 * n) * 100).toFixed(2)}%</td>
     <td>${f$(totals.hoa/n)}</td>
     <td>${f$(totals.ins/n)}</td>
     <td>${f$(totals.tax/n)}</td>
