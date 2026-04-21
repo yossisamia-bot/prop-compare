@@ -1296,7 +1296,9 @@ function recalc() {
     const holding     = parseFloat(document.getElementById(`holding_${i}`).value) || 0;
 
     // --- Cost Calculations ---
-    const totalCost    = housePrice + INVESTMENT_FEE + TOTAL_CLOSING;
+    // When financing is 0% (all cash), skip loan origination points — they're a lender fee.
+    const closingCosts = financing > 0 ? TOTAL_CLOSING : TOTAL_CLOSING - CLOSING_COSTS.loanPoints;
+    const totalCost    = housePrice + INVESTMENT_FEE + closingCosts;
     const mortgage     = financing * housePrice;
     const downPayment  = totalCost - mortgage;
     const totalEquity  = downPayment + RESERVE_FUND;
@@ -1346,7 +1348,7 @@ function recalc() {
 
     // Update cells
     setCell(`housePriceOut_${i}`, fmt$(housePrice));
-    setCell(`closing_${i}`, fmt$(TOTAL_CLOSING));
+    setCell(`closing_${i}`, fmt$(closingCosts));
     setCell(`totalCost_${i}`, fmt$(totalCost));
     setCell(`mortgage_${i}`, fmt$(mortgage));
     setCell(`downPayment_${i}`, fmt$(downPayment));
