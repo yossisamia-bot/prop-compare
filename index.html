@@ -933,9 +933,9 @@
       <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$800</div>
 
       <div class="cell-label group-hidden" data-group="closing" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">הקמת הלוואה (עמלה, נקודות)</div>
-      <div class="cell-value group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$4,500</div>
-      <div class="cell-value group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$4,500</div>
-      <div class="cell-value group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$4,500</div>
+      <div class="cell-value group-hidden" data-group="closing" id="loanPointsCell_0" style="font-size:0.8rem; color:#6b7280;">$4,500</div>
+      <div class="cell-value group-hidden" data-group="closing" id="loanPointsCell_1" style="font-size:0.8rem; color:#6b7280;">$4,500</div>
+      <div class="cell-value group-hidden" data-group="closing" id="loanPointsCell_2" style="font-size:0.8rem; color:#6b7280;">$4,500</div>
 
       <div class="cell-label gray group-hidden" data-group="closing" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">שמאות לנכס</div>
       <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$500</div>
@@ -1329,6 +1329,10 @@ function recalc() {
     // --- Cost Calculations ---
     // When financing is 0% (all cash), skip loan origination points — they're a lender fee.
     const closingCosts = financing > 0 ? TOTAL_CLOSING : TOTAL_CLOSING - CLOSING_COSTS.loanPoints;
+    const loanPointsCell = document.getElementById(`loanPointsCell_${i}`);
+    if (loanPointsCell) {
+      loanPointsCell.textContent = financing > 0 ? fmt$(CLOSING_COSTS.loanPoints) : '—';
+    }
     const totalCost    = housePrice + INVESTMENT_FEE + closingCosts;
     const mortgage     = financing * housePrice;
     const downPayment  = totalCost - mortgage;
