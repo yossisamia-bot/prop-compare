@@ -1419,7 +1419,11 @@ function recalc() {
       const { housePrice, rate, ioYears, piYears, mortgage, monthlyCash,
               holding, downPayment, financing } = s;
 
-      const salePrice = housePrice * Math.pow(1 + appRate, holding);
+      // הבסיס לעליית הערך: בית + ליווי + סגירה רגילה (בלי loan points).
+      // loan points הן תשלום למלווה ספציפי למימון - לא חלק משווי הבית בשוק.
+      // baseline זהה לכל המימונים, כי "לכולם יש עלויות סגירה זהות".
+      const appreciationBase = housePrice + INVESTMENT_FEE + (TOTAL_CLOSING - CLOSING_COSTS.loanPoints);
+      const salePrice = appreciationBase * Math.pow(1 + appRate, holding);
       const saleCosts = salePrice * 0.07;
 
       let remainMortgage;
@@ -1615,8 +1619,10 @@ function buildHeatmap() {
 
       const monthlyCash = rent - monthlyExp - monthlyFinancing;
 
-      // Future value & sale
-      const salePrice = price * Math.pow(1 + appr, yr);
+      // הבסיס לעליית הערך: בית + ליווי + סגירה רגילה (בלי loan points).
+      // baseline זהה לכל המימונים.
+      const appreciationBase = price + INVESTMENT_FEE + (TOTAL_CLOSING - CLOSING_COSTS.loanPoints);
+      const salePrice = appreciationBase * Math.pow(1 + appr, yr);
       const saleCosts = salePrice * 0.07;
 
       // Remaining mortgage
