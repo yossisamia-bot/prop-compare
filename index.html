@@ -1456,12 +1456,12 @@ function recalc() {
 
 // ======= Default Values =======
 const DEFAULTS = [
-  // Scenario 0: 0% financing | $200k | rent $1,850
-  { housePrice: '200,000', rent: '1,850', rate: 6.7, ioYears: 0, piYears: 20, financing: 0,  holding: 10 },
-  // Scenario 1: 50% financing | $200k | rent $1,850
-  { housePrice: '200,000', rent: '1,850', rate: 6.7, ioYears: 0, piYears: 20, financing: 50, holding: 10 },
-  // Scenario 2: 70% financing | $200k | rent $1,850
-  { housePrice: '200,000', rent: '1,850', rate: 6.7, ioYears: 0, piYears: 20, financing: 70, holding: 10 },
+  // Scenario 0: 0% financing | $175k | rent $1,800 | 30y P+I from day 1
+  { housePrice: '175,000', rent: '1,800', rate: 6.7, ioYears: 0, piYears: 30, financing: 0,  holding: 10 },
+  // Scenario 1: 50% financing | $175k | rent $1,800 | 30y P+I from day 1
+  { housePrice: '175,000', rent: '1,800', rate: 6.7, ioYears: 0, piYears: 30, financing: 50, holding: 10 },
+  // Scenario 2: 70% financing | $175k | rent $1,800 | 30y P+I from day 1
+  { housePrice: '175,000', rent: '1,800', rate: 6.7, ioYears: 0, piYears: 30, financing: 70, holding: 10 },
 ];
 
 function resetDefaults() {
@@ -1569,11 +1569,11 @@ function buildHeatmap() {
   if (!head || !body) return;
 
   // STATIC parameters - change ONLY by editing these values directly
-  const price = 200000;
-  const rent = 1850;
-  const rate = 0.065;
-  const ioYears = 5;
-  const piYears = 15;
+  const price = 175000;
+  const rent = 1800;
+  const rate = 0.067;
+  const ioYears = 0;
+  const piYears = 30;
   const appr = 0.045;
 
   const finLevels = [0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65];
