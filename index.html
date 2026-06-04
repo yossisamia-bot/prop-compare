@@ -1175,6 +1175,29 @@
   <!-- TAB 2: Portfolio -->
   <div class="tab-content" id="tab-portfolio">
     <div class="portfolio-card">
+      <h2>🆕 עסקאות 2026 – מחיר מלא והנחות שניתנו</h2>
+      <div style="overflow-x:auto;">
+        <table class="ptable" id="dealsTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>כתובת</th>
+              <th>תאריך חוזה</th>
+              <th>מחיר מחירון<br><small style="font-weight:normal; opacity:0.8;">(Lennar list)</small></th>
+              <th>הנחת בנאי<br><small style="font-weight:normal; opacity:0.8;">(incentive)</small></th>
+              <th>מחיר רכישה נטו</th>
+              <th>זיכוי סגירה<br>ממוכר</th>
+              <th>סה"כ הטבה<br><small style="font-weight:normal; opacity:0.8;">(הנחה + זיכוי)</small></th>
+              <th>מימון</th>
+            </tr>
+          </thead>
+          <tbody id="dealsBody"></tbody>
+        </table>
+      </div>
+      <div class="portfolio-note">מחיר מחירון = מחיר בסיס Lennar + תוספת מגרש · הנחת בנאי = incentive שמוריד מהמחיר · זיכוי סגירה ממוכר = השתתפות המוכר בעלויות סגירה (נפרד מההנחה)</div>
+      <div class="portfolio-note">* היכן שמסומן * (עמודת סה"כ הטבה): מחיר מחירון/הנחה לא תועדו (דגם 25' שונה); ההטבה מציגה זיכוי סגירה בלבד.</div>
+    </div>
+    <div class="portfolio-card">
       <h2>🏠 תיק נכסים – רכישות אחרונות שבוצעו</h2>
       <div style="overflow-x:auto;">
         <table class="ptable" id="portfolioTable">
@@ -1665,6 +1688,7 @@ recalc();
 
 // Pre-declare portfolio flag (needed before buildPortfolio definition)
 var portfolioBuilt = false;
+var dealsBuilt = false;
 
 // ======= Portfolio URL Gate =======
 // Show portfolio tab ONLY if ?p=1 in URL
@@ -1682,6 +1706,7 @@ if (!showPortfolio) {
   document.querySelector('.legend').style.display = 'none';
   document.querySelector('header h1').textContent = '🏠 תיק נכסים – נתוני אמת';
   document.getElementById('tab-portfolio').style.display = 'block';
+  buildDeals();
   buildPortfolio();
 }
 
@@ -1703,6 +1728,62 @@ function switchTab(tab) {
   if (tab === 'calc') btns[0].classList.add('active');
   else btns[1].classList.add('active');
   if (tab === 'portfolio') buildPortfolio();
+}
+
+// ======= 2026 Deals (purchase price + discounts) =======
+function buildDeals() {
+  if (dealsBuilt) return;
+  dealsBuilt = true;
+
+  const deals = [
+    { addr:'20135 Green Mallard St, Crosby',   date:'25/04/2026', list:null,   incentive:null,  net:174922, credit:3498,  creditNote:'2%',  fin:'מזומן' },
+    { addr:'1523 Gardenia Blossom Ln, Crosby', date:'27/04/2026', list:248990, incentive:79000, net:169990, credit:1700,  creditNote:null,  fin:'מזומן' },
+    { addr:'20042 White Dove Trl, Crosby',     date:'30/04/2026', list:252990, incentive:87490, net:165500, credit:9930,  creditNote:'6%',  fin:'מימון' },
+    { addr:'1542 Gardenia Blossom Ln, Crosby', date:'13/05/2026', list:252990, incentive:75000, net:177990, credit:10679, creditNote:null,  fin:'קונבנציונלי' },
+    { addr:'1519 Golden Iris Dr, Crosby',      date:'18/05/2026', list:252990, incentive:75000, net:177990, credit:12000, creditNote:null,  fin:'קונבנציונלי' },
+    { addr:'1530 Golden Iris Dr, Crosby',      date:'30/05/2026', list:209990, incentive:30000, net:179990, credit:10799, creditNote:null,  fin:'קונבנציונלי' }
+  ];
+
+  const f$ = v => v == null ? '—' : '$' + Math.round(v).toLocaleString('en-US');
+  const body = document.getElementById('dealsBody');
+  let t = { list:0, inc:0, net:0, credit:0 };
+
+  deals.forEach((d, i) => {
+    const benefit = (d.incentive || 0) + (d.credit || 0);
+    if (d.list != null)      t.list += d.list;
+    if (d.incentive != null) t.inc += d.incentive;
+    t.net += d.net;
+    t.credit += (d.credit || 0);
+    const creditDisp = d.credit != null ? (f$(d.credit) + (d.creditNote ? ' (' + d.creditNote + ')' : '')) : '—';
+    const benefitDisp = d.incentive != null ? f$(benefit) : (f$(d.credit) + '*');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${i+1}</td>
+      <td class="addr">${d.addr}</td>
+      <td>${d.date}</td>
+      <td>${f$(d.list)}</td>
+      <td class="neg">${d.incentive != null ? '-' + f$(d.incentive) : '—'}</td>
+      <td><b>${f$(d.net)}</b></td>
+      <td>${creditDisp}</td>
+      <td class="highlight"><b>${benefitDisp}</b></td>
+      <td>${d.fin}</td>
+    `;
+    body.appendChild(tr);
+  });
+
+  const tr2 = document.createElement('tr');
+  tr2.className = 'totals-row';
+  tr2.innerHTML = `
+    <td colspan="2">סה"כ (${deals.length} עסקאות)</td>
+    <td></td>
+    <td>${f$(t.list)}</td>
+    <td class="neg">-${f$(t.inc)}</td>
+    <td><b>${f$(t.net)}</b></td>
+    <td>${f$(t.credit)}</td>
+    <td class="highlight"><b>${f$(t.inc + t.credit)}</b></td>
+    <td></td>
+  `;
+  body.appendChild(tr2);
 }
 
 // ======= Portfolio Data & Calculations =======
