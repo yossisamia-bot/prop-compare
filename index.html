@@ -1195,7 +1195,6 @@
         </table>
       </div>
       <div class="portfolio-note">מחיר מחירון = מחיר בסיס Lennar + תוספת מגרש · הנחת בנאי = incentive שמוריד מהמחיר · זיכוי סגירה ממוכר = השתתפות המוכר בעלויות סגירה (נפרד מההנחה)</div>
-      <div class="portfolio-note">* היכן שמסומן * (עמודת סה"כ הטבה): מחיר מחירון/הנחה לא תועדו (דגם 25' שונה); ההטבה מציגה זיכוי סגירה בלבד.</div>
     </div>
     <div class="portfolio-card">
       <h2>🏠 תיק נכסים – רכישות אחרונות שבוצעו</h2>
@@ -1736,7 +1735,7 @@ function buildDeals() {
   dealsBuilt = true;
 
   const deals = [
-    { addr:'20135 Green Mallard St, Crosby',   date:'25/04/2026', list:null,   incentive:null,  net:174922, credit:3498,  creditNote:'2%',  fin:'מזומן' },
+    { addr:'20135 Green Mallard St, Crosby',   date:'25/04/2026', list:211990, incentive:37068, net:174922, credit:3498,  creditNote:'2%',  fin:'מזומן' },
     { addr:'1523 Gardenia Blossom Ln, Crosby', date:'27/04/2026', list:248990, incentive:79000, net:169990, credit:1700,  creditNote:null,  fin:'מזומן' },
     { addr:'20042 White Dove Trl, Crosby',     date:'30/04/2026', list:252990, incentive:87490, net:165500, credit:9930,  creditNote:'6%',  fin:'מימון' },
     { addr:'1542 Gardenia Blossom Ln, Crosby', date:'13/05/2026', list:252990, incentive:75000, net:177990, credit:10679, creditNote:null,  fin:'קונבנציונלי' },
@@ -1755,7 +1754,7 @@ function buildDeals() {
     t.net += d.net;
     t.credit += (d.credit || 0);
     const creditDisp = d.credit != null ? (f$(d.credit) + (d.creditNote ? ' (' + d.creditNote + ')' : '')) : '—';
-    const benefitDisp = d.incentive != null ? f$(benefit) : (f$(d.credit) + '*');
+    const benefitDisp = f$(benefit);
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${i+1}</td>
