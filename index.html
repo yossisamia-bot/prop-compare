@@ -887,6 +887,12 @@
       <div class="cell-value green-cell"><input class="green-input" id="hoa_1" type="text" value="1,500" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
       <div class="cell-value green-cell"><input class="green-input" id="hoa_2" type="text" value="1,500" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
 
+      <!-- Row: ניהול חברה שנתי -->
+      <div class="cell-label">ניהול חברה (שנתי)</div>
+      <div class="cell-value output" id="adminY_0">$300</div>
+      <div class="cell-value output" id="adminY_1">$300</div>
+      <div class="cell-value output" id="adminY_2">$300</div>
+
       <!-- Row: Vacancy -->
       <div class="cell-label alt">Vacancy (%)</div>
       <div class="cell-value gray output" id="vac_0">4.0%</div>
@@ -1023,9 +1029,9 @@
         <span>הוצאות חודשיות (מס+ביטוח+ניהול+HOA+...)</span>
         <span class="toggle-btn-gray" id="btn-monthly" onclick="toggleGroup(&#39;monthly&#39;)" title="הצג/הסתר פירוט">＋</span>
       </div>
-      <div class="cell-value output" id="monthlyExp_0">$1,038</div>
-      <div class="cell-value output" id="monthlyExp_1">$1,038</div>
-      <div class="cell-value output" id="monthlyExp_2">$1,038</div>
+      <div class="cell-value output" id="monthlyExp_0">$1,063</div>
+      <div class="cell-value output" id="monthlyExp_1">$1,063</div>
+      <div class="cell-value output" id="monthlyExp_2">$1,063</div>
 
       <!-- Row: תשלום מימון -->
       <div class="cell-label alt">תשלום מימון חודשי (ממוצע)</div>
@@ -1069,16 +1075,21 @@
       <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="tenantM_1">$51</div>
       <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="tenantM_2">$51</div>
 
+      <div class="cell-label gray group-hidden" data-group="monthly" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">ניהול חברה (חודשי)</div>
+      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;" id="adminM_0">$25</div>
+      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;" id="adminM_1">$25</div>
+      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;" id="adminM_2">$25</div>
+
       <!-- RESULT ROWS -->
       <div class="cell-label" style="font-weight:700; background:var(--light-blue-bg);">נשאר 'אוויר' בחשבון (חודשי)</div>
-      <div class="cell-value light-blue positive" id="monthlyCash_0">+$812</div>
-      <div class="cell-value light-blue positive" id="monthlyCash_1">+$204</div>
-      <div class="cell-value light-blue negative" id="monthlyCash_2">-$39</div>
+      <div class="cell-value light-blue positive" id="monthlyCash_0">+$787</div>
+      <div class="cell-value light-blue positive" id="monthlyCash_1">+$179</div>
+      <div class="cell-value light-blue negative" id="monthlyCash_2">-$64</div>
 
       <div class="cell-label" style="font-weight:700; background:var(--light-blue-bg);">נשאר בשנה</div>
-      <div class="cell-value light-blue positive" id="annualCash_0">+$9,741</div>
-      <div class="cell-value light-blue positive" id="annualCash_1">+$2,449</div>
-      <div class="cell-value light-blue negative" id="annualCash_2">-$467</div>
+      <div class="cell-value light-blue positive" id="annualCash_0">+$9,441</div>
+      <div class="cell-value light-blue positive" id="annualCash_1">+$2,149</div>
+      <div class="cell-value light-blue negative" id="annualCash_2">-$767</div>
 
     </div><!-- end scenarios-grid -->
     </div><!-- end grid-scroll-wrapper -->
@@ -1101,7 +1112,7 @@
             <th id="sh2">70% מימון</th>
           </tr>
         </thead>
-        <tbody id="sensitivityBody"><tr><td>2%</td><td class="neutral">6.1%</td><td class="neutral">5.2%</td><td class="neutral">4.6%</td></tr><tr><td>4%</td><td class="good">8.5%</td><td class="good">9.5%</td><td class="good">10.9%</td></tr><tr><td>6%</td><td class="good">11.4%</td><td class="good">14.6%</td><td class="good">18.3%</td></tr><tr><td>8%</td><td class="good">14.8%</td><td class="good">20.6%</td><td class="good">27.2%</td></tr><tr><td>10%</td><td class="good">18.9%</td><td class="good">27.7%</td><td class="good">37.6%</td></tr></tbody>
+        <tbody id="sensitivityBody"><tr><td>2%</td><td class="neutral">6.0%</td><td class="neutral">5.0%</td><td class="neutral">4.3%</td></tr><tr><td>4%</td><td class="good">8.4%</td><td class="good">9.2%</td><td class="good">10.5%</td></tr><tr><td>6%</td><td class="good">11.3%</td><td class="good">14.3%</td><td class="good">18.0%</td></tr><tr><td>8%</td><td class="good">14.7%</td><td class="good">20.3%</td><td class="good">26.8%</td></tr><tr><td>10%</td><td class="good">18.7%</td><td class="good">27.4%</td><td class="good">37.2%</td></tr></tbody>
       </table>
       <div class="note">* הוצאות מכירה: 7% מהמכירה | מבנה ההלוואה לפי השדות למעלה: תקופת I.O אם הוגדרה, לאחר מכן P+I</div>
     </div>
@@ -1302,6 +1313,7 @@ const REPAIRS = 600;
 const TENANT_CHANGE_YEARS = 3;
 const INVESTMENT_FEE = 12000;
 const RESERVE_FUND = 10000;
+const COMPANY_ADMIN = 300; // הגשה שנתית + נאמן רשום ל-LLC (הקמה חד-פעמית כבר בעלויות הסגירה); בפועל ~200-400$/שנה
 
 const CLOSING_COSTS = {
   llc: 1150,
@@ -1402,7 +1414,7 @@ function recalc() {
 
     // Formula: =(B4*B2+B5+B6*B3*12+B3/B10+B7+B8*B3*12+B9)/12
     const monthlyExp = (PROPERTY_TAX * housePrice + INSURANCE + MGMT_FEE * rent * 12
-                        + rent / TENANT_CHANGE_YEARS + colHOA + VACANCY * rent * 12 + REPAIRS) / 12;
+                        + rent / TENANT_CHANGE_YEARS + colHOA + VACANCY * rent * 12 + REPAIRS + COMPANY_ADMIN) / 12;
 
     // --- Monthly Financing ---
     let monthlyFinancing = 0;
@@ -1447,12 +1459,14 @@ function recalc() {
     setCell(`monthlyFinancing_${i}`, fmt$(monthlyFinancing));
 
     setCell(`ins_${i}`, fmt$(INSURANCE));
+    setCell(`adminY_${i}`, fmt$(COMPANY_ADMIN));
     setCell(`propTaxM_${i}`, fmt$(monthlyTax));
     setCell(`insM_${i}`, fmt$(monthlyIns));
     setCell(`mgmtM_${i}`, fmt$(monthlyMgmt));
     setCell(`hoaM_${i}`, fmt$(monthlyHOA));
     setCell(`vacM_${i}`, fmt$(monthlyVac));
     setCell(`tenantM_${i}`, fmt$(monthlyTenant));
+    setCell(`adminM_${i}`, fmt$(COMPANY_ADMIN / 12));
 
     setCashCell(`monthlyCash_${i}`, monthlyCash);
     setCashCell(`annualCash_${i}`, annualCash);
@@ -1666,7 +1680,7 @@ function buildHeatmap() {
 
       // Monthly expenses (same formula as main calc)
       const monthlyExp = (PROPERTY_TAX * price + INSURANCE + MGMT_FEE * rent * 12
-                          + rent / TENANT_CHANGE_YEARS + HOA + VACANCY * rent * 12 + REPAIRS) / 12;
+                          + rent / TENANT_CHANGE_YEARS + HOA + VACANCY * rent * 12 + REPAIRS + COMPANY_ADMIN) / 12;
 
       // Monthly financing - average over holding period
       let monthlyFinancing = 0;
