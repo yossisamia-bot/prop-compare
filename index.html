@@ -841,24 +841,24 @@
 
       <!-- Headers -->
       <div class="scenario-header">נתוני בסיס</div>
-      <div class="scenario-header" id="h0"><input class="header-fin-input" id="headerFin_0" type="number" value="0" min="0" max="100" onchange="syncFinFromHeader()" oninput="syncFinFromHeader()"><span class="header-fin-label">% מימון</span></div>
-      <div class="scenario-header" id="h1"><input class="header-fin-input" id="headerFin_1" type="number" value="50" min="0" max="100" onchange="syncFinFromHeader()" oninput="syncFinFromHeader()"><span class="header-fin-label">% מימון</span></div>
-      <div class="scenario-header" id="h2"><input class="header-fin-input" id="headerFin_2" type="number" value="70" min="0" max="100" onchange="syncFinFromHeader()" oninput="syncFinFromHeader()"><span class="header-fin-label">% מימון</span></div>
+      <div class="scenario-header" id="h0"><input class="header-fin-input" id="headerFin_0" type="number" value="0" min="0" max="100" onchange="syncFinFromHeader()" oninput="syncFinFromHeader()" onblur="clampFin(this)"><span class="header-fin-label">% מימון</span></div>
+      <div class="scenario-header" id="h1"><input class="header-fin-input" id="headerFin_1" type="number" value="50" min="0" max="100" onchange="syncFinFromHeader()" oninput="syncFinFromHeader()" onblur="clampFin(this)"><span class="header-fin-label">% מימון</span></div>
+      <div class="scenario-header" id="h2"><input class="header-fin-input" id="headerFin_2" type="number" value="70" min="0" max="100" onchange="syncFinFromHeader()" oninput="syncFinFromHeader()" onblur="clampFin(this)"><span class="header-fin-label">% מימון</span></div>
 
       <!-- Section: נתוני קלט -->
       <div class="section-title" data-track="inputs">נתוני קלט (שדות ירוקים – ניתנים לשינוי)</div>
 
       <!-- Row: מחיר בית -->
       <div class="cell-label alt">מחיר בית</div>
-      <div class="cell-value green-cell"><input class="green-input" id="housePrice_0" type="text" value="200,000" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
-      <div class="cell-value green-cell"><input class="green-input" id="housePrice_1" type="text" value="200,000" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
-      <div class="cell-value green-cell"><input class="green-input" id="housePrice_2" type="text" value="200,000" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="housePrice_0" type="text" value="175,000" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="housePrice_1" type="text" value="175,000" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="housePrice_2" type="text" value="175,000" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
 
       <!-- Row: שכירות חודשית -->
       <div class="cell-label">שכירות חודשית</div>
-      <div class="cell-value green-cell"><input class="green-input" id="rent_0" type="text" value="1,850" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
-      <div class="cell-value green-cell"><input class="green-input" id="rent_1" type="text" value="1,850" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
-      <div class="cell-value green-cell"><input class="green-input" id="rent_2" type="text" value="1,850" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="rent_0" type="text" value="1,800" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="rent_1" type="text" value="1,800" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="rent_2" type="text" value="1,800" onfocus="unformatInput(this)" onblur="formatInput(this)" oninput="recalc()"></div>
 
       <!-- Fixed costs section header -->
       <div class="section-title" data-track="fixed_costs">הוצאות שנתיות (קבועות)</div>
@@ -871,9 +871,9 @@
 
       <!-- Row: ביטוח נכס -->
       <div class="cell-label">ביטוח נכס (שנתי)</div>
-      <div class="cell-value output" id="ins_0">$1,150</div>
-      <div class="cell-value output" id="ins_1">$1,150</div>
-      <div class="cell-value output" id="ins_2">$1,150</div>
+      <div class="cell-value output" id="ins_0">$1,158</div>
+      <div class="cell-value output" id="ins_1">$1,158</div>
+      <div class="cell-value output" id="ins_2">$1,158</div>
 
       <!-- Row: ניהול נכסים -->
       <div class="cell-label alt">ניהול נכסים (%)</div>
@@ -910,18 +910,18 @@
 
       <!-- Row: PI Years -->
       <div class="cell-label alt">שנים קרן + ריבית (P+I)</div>
-      <div class="cell-value green-cell"><input class="green-input" id="piYears_0" type="number" value="20" onchange="recalc()" oninput="recalc()"></div>
-      <div class="cell-value green-cell"><input class="green-input" id="piYears_1" type="number" value="20" onchange="recalc()" oninput="recalc()"></div>
-      <div class="cell-value green-cell"><input class="green-input" id="piYears_2" type="number" value="20" onchange="recalc()" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="piYears_0" type="number" value="30" onchange="recalc()" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="piYears_1" type="number" value="30" onchange="recalc()" oninput="recalc()"></div>
+      <div class="cell-value green-cell"><input class="green-input" id="piYears_2" type="number" value="30" onchange="recalc()" oninput="recalc()"></div>
 
       <!-- Section: כמה אני שם? -->
       <div class="section-title" data-track="equity">כמה אני שם? (הון עצמי)</div>
 
       <!-- Row: מחיר הבית -->
       <div class="cell-label alt">מחיר הבית</div>
-      <div class="cell-value output" id="housePriceOut_0">$230,000</div>
-      <div class="cell-value output" id="housePriceOut_1">$200,000</div>
-      <div class="cell-value output" id="housePriceOut_2">$170,000</div>
+      <div class="cell-value output" id="housePriceOut_0">$175,000</div>
+      <div class="cell-value output" id="housePriceOut_1">$175,000</div>
+      <div class="cell-value output" id="housePriceOut_2">$175,000</div>
 
       <!-- Row: ליווי השקעה -->
       <div class="cell-label">ליווי השקעה (אספקט)</div>
@@ -934,9 +934,9 @@
         <span>עלויות התאמה + סגירה</span>
         <span class="toggle-btn-gray" id="btn-closing" onclick="toggleGroup(&#39;closing&#39;)" title="הצג/הסתר פירוט">＋</span>
       </div>
-      <div class="cell-value gray output" id="closing_0">$9,047</div>
-      <div class="cell-value gray output" id="closing_1">$9,047</div>
-      <div class="cell-value gray output" id="closing_2">$9,047</div>
+      <div class="cell-value gray output" id="closing_0">$7,367</div>
+      <div class="cell-value gray output" id="closing_1">$11,867</div>
+      <div class="cell-value gray output" id="closing_2">$11,867</div>
 
       <!-- Closing cost breakdown (collapsed by default) -->
       <div class="cell-label gray group-hidden" data-group="closing" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">הקמת LLC + EIN + אגרה</div>
@@ -945,7 +945,7 @@
       <div class="cell-value gray group-hidden" data-group="closing" style="font-size:0.8rem; color:#6b7280;">$1,150</div>
 
       <div class="cell-label group-hidden" data-group="closing" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">הקמת הלוואה (עמלה, נקודות)</div>
-      <div class="cell-value group-hidden" data-group="closing" id="loanPointsCell_0" style="font-size:0.8rem; color:#6b7280;">$4,500</div>
+      <div class="cell-value group-hidden" data-group="closing" id="loanPointsCell_0" style="font-size:0.8rem; color:#6b7280;">—</div>
       <div class="cell-value group-hidden" data-group="closing" id="loanPointsCell_1" style="font-size:0.8rem; color:#6b7280;">$4,500</div>
       <div class="cell-value group-hidden" data-group="closing" id="loanPointsCell_2" style="font-size:0.8rem; color:#6b7280;">$4,500</div>
 
@@ -981,21 +981,21 @@
 
       <!-- Row: עלות רכישה כוללת -->
       <div class="cell-label">עלות רכישה כוללת</div>
-      <div class="cell-value output" id="totalCost_0">$251,047</div>
-      <div class="cell-value output" id="totalCost_1">$221,047</div>
-      <div class="cell-value output" id="totalCost_2">$191,047</div>
+      <div class="cell-value output" id="totalCost_0">$194,367</div>
+      <div class="cell-value output" id="totalCost_1">$198,867</div>
+      <div class="cell-value output" id="totalCost_2">$198,867</div>
 
       <!-- Row: משכנתא -->
       <div class="cell-label alt">משכנתא (לפי אחוז מימון)</div>
       <div class="cell-value gray output" id="mortgage_0">$0</div>
-      <div class="cell-value gray output" id="mortgage_1">$140,000</div>
-      <div class="cell-value gray output" id="mortgage_2">$110,500</div>
+      <div class="cell-value gray output" id="mortgage_1">$87,500</div>
+      <div class="cell-value gray output" id="mortgage_2">$122,500</div>
 
       <!-- Row: דאון פיימנט -->
       <div class="cell-label">דאון פיימנט</div>
-      <div class="cell-value output" id="downPayment_0">$251,047</div>
-      <div class="cell-value output" id="downPayment_1">$81,047</div>
-      <div class="cell-value output" id="downPayment_2">$80,547</div>
+      <div class="cell-value output" id="downPayment_0">$194,367</div>
+      <div class="cell-value output" id="downPayment_1">$111,367</div>
+      <div class="cell-value output" id="downPayment_2">$76,367</div>
 
       <!-- Row: הון עצמי נוסף -->
       <div class="cell-label alt">הון עצמי נוסף (ESCROW + זמין)</div>
@@ -1005,59 +1005,59 @@
 
       <!-- Row: סה"כ הון עצמי -->
       <div class="cell-label" style="font-weight:700; background:#fff2cc;">סה"כ הון עצמי נדרש ($)</div>
-      <div class="cell-value yellow" id="totalEquity_0">$261,047</div>
-      <div class="cell-value yellow" id="totalEquity_1">$91,047</div>
-      <div class="cell-value yellow" id="totalEquity_2">$90,547</div>
+      <div class="cell-value yellow" id="totalEquity_0">$204,367</div>
+      <div class="cell-value yellow" id="totalEquity_1">$121,367</div>
+      <div class="cell-value yellow" id="totalEquity_2">$86,367</div>
 
       <!-- Section: כמה נשאר כל חודש? -->
       <div class="section-title" data-track="monthly_cash">כמה נשאר כל חודש?</div>
 
       <!-- Row: שכירות נכנסת -->
       <div class="cell-label alt">שכירות חודשית נכנסת</div>
-      <div class="cell-value gray output" id="rentIn_0">$2,000</div>
-      <div class="cell-value gray output" id="rentIn_1">$1,750</div>
-      <div class="cell-value gray output" id="rentIn_2">$1,500</div>
+      <div class="cell-value gray output" id="rentIn_0">$1,800</div>
+      <div class="cell-value gray output" id="rentIn_1">$1,800</div>
+      <div class="cell-value gray output" id="rentIn_2">$1,800</div>
 
       <!-- Row: הוצאות חודשיות -->
       <div class="cell-label" style="display:flex; align-items:center; justify-content:space-between;">
         <span>הוצאות חודשיות (מס+ביטוח+ניהול+HOA+...)</span>
         <span class="toggle-btn-gray" id="btn-monthly" onclick="toggleGroup(&#39;monthly&#39;)" title="הצג/הסתר פירוט">＋</span>
       </div>
-      <div class="cell-value output" id="monthlyExp_0">$1,130</div>
-      <div class="cell-value output" id="monthlyExp_1">$1,013</div>
-      <div class="cell-value output" id="monthlyExp_2">$896</div>
+      <div class="cell-value output" id="monthlyExp_0">$1,004</div>
+      <div class="cell-value output" id="monthlyExp_1">$1,004</div>
+      <div class="cell-value output" id="monthlyExp_2">$1,004</div>
 
       <!-- Row: תשלום מימון -->
       <div class="cell-label alt">תשלום מימון חודשי (ממוצע)</div>
       <div class="cell-value gray output" id="monthlyFinancing_0">$0</div>
-      <div class="cell-value gray output" id="monthlyFinancing_1">$989</div>
-      <div class="cell-value gray output" id="monthlyFinancing_2">$781</div>
+      <div class="cell-value gray output" id="monthlyFinancing_1">$565</div>
+      <div class="cell-value gray output" id="monthlyFinancing_2">$790</div>
 
       <!-- Monthly breakdown (collapsed by default) -->
       <div class="cell-label group-hidden" data-group="monthly" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">מס רכוש (חודשי)</div>
-      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="propTaxM_0">$613</div>
-      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="propTaxM_1">$533</div>
-      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="propTaxM_2">$453</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="propTaxM_0">$467</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="propTaxM_1">$467</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="propTaxM_2">$467</div>
 
       <div class="cell-label gray group-hidden" data-group="monthly" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">ביטוח (חודשי)</div>
-      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;">$96</div>
-      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;">$96</div>
-      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;">$96</div>
+      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;" id="insM_0">$97</div>
+      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;" id="insM_1">$97</div>
+      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;" id="insM_2">$97</div>
 
       <div class="cell-label group-hidden" data-group="monthly" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">ניהול נכס (חודשי)</div>
-      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="mgmtM_0">$160</div>
-      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="mgmtM_1">$140</div>
-      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="mgmtM_2">$120</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="mgmtM_0">$144</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="mgmtM_1">$144</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="mgmtM_2">$144</div>
 
       <div class="cell-label gray group-hidden" data-group="monthly" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">HOA (חודשי)</div>
-      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;">$75</div>
-      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;">$75</div>
-      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;">$75</div>
+      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;" id="hoaM_0">$125</div>
+      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;" id="hoaM_1">$125</div>
+      <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;" id="hoaM_2">$125</div>
 
       <div class="cell-label group-hidden" data-group="monthly" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">Vacancy (חודשי)</div>
-      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="vacM_0">$80</div>
-      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="vacM_1">$70</div>
-      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="vacM_2">$60</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="vacM_0">$72</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="vacM_1">$72</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="vacM_2">$72</div>
 
       <div class="cell-label gray group-hidden" data-group="monthly" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">תיקונים ותחזוקה (חודשי)</div>
       <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;">$50</div>
@@ -1065,20 +1065,20 @@
       <div class="cell-value gray group-hidden" data-group="monthly" style="font-size:0.8rem;">$50</div>
 
       <div class="cell-label group-hidden" data-group="monthly" style="padding-right:26px; font-size:0.78rem; color:#6b7280;">החלפת שוכר (חודשי)</div>
-      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="tenantM_0">$56</div>
-      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="tenantM_1">$49</div>
-      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="tenantM_2">$42</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="tenantM_0">$50</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="tenantM_1">$50</div>
+      <div class="cell-value group-hidden" data-group="monthly" style="font-size:0.8rem;" id="tenantM_2">$50</div>
 
       <!-- RESULT ROWS -->
       <div class="cell-label" style="font-weight:700; background:var(--light-blue-bg);">נשאר 'אוויר' בחשבון (חודשי)</div>
-      <div class="cell-value light-blue positive" id="monthlyCash_0">+$870</div>
-      <div class="cell-value light-blue negative" id="monthlyCash_1">$-252</div>
-      <div class="cell-value light-blue negative" id="monthlyCash_2">$-176</div>
+      <div class="cell-value light-blue positive" id="monthlyCash_0">+$796</div>
+      <div class="cell-value light-blue positive" id="monthlyCash_1">+$231</div>
+      <div class="cell-value light-blue positive" id="monthlyCash_2">+$5</div>
 
       <div class="cell-label" style="font-weight:700; background:var(--light-blue-bg);">נשאר בשנה</div>
-      <div class="cell-value light-blue positive" id="annualCash_0">+$10,443</div>
-      <div class="cell-value light-blue negative" id="annualCash_1">$-3,021</div>
-      <div class="cell-value light-blue negative" id="annualCash_2">$-2,117</div>
+      <div class="cell-value light-blue positive" id="annualCash_0">+$9,550</div>
+      <div class="cell-value light-blue positive" id="annualCash_1">+$2,775</div>
+      <div class="cell-value light-blue positive" id="annualCash_2">+$64</div>
 
     </div><!-- end scenarios-grid -->
     </div><!-- end grid-scroll-wrapper -->
@@ -1101,9 +1101,9 @@
             <th id="sh2">70% מימון</th>
           </tr>
         </thead>
-        <tbody id="sensitivityBody"><tr><td>2%</td><td class="neutral">4.9%</td><td class="bad">2.2%</td><td class="bad">2.0%</td></tr><tr><td>4%</td><td class="neutral">7.2%</td><td class="good">8.2%</td><td class="neutral">7.1%</td></tr><tr><td>6%</td><td class="good">9.8%</td><td class="good">15.4%</td><td class="good">13.2%</td></tr><tr><td>8%</td><td class="good">13.0%</td><td class="good">23.8%</td><td class="good">20.5%</td></tr><tr><td>10%</td><td class="good">16.7%</td><td class="good">33.8%</td><td class="good">29.0%</td></tr></tbody>
+        <tbody id="sensitivityBody"><tr><td>2%</td><td class="neutral">6.3%</td><td class="neutral">5.6%</td><td class="neutral">5.3%</td></tr><tr><td>4%</td><td class="good">8.7%</td><td class="good">9.8%</td><td class="good">11.5%</td></tr><tr><td>6%</td><td class="good">11.6%</td><td class="good">14.9%</td><td class="good">18.8%</td></tr><tr><td>8%</td><td class="good">15.0%</td><td class="good">20.8%</td><td class="good">27.5%</td></tr><tr><td>10%</td><td class="good">19.0%</td><td class="good">27.9%</td><td class="good">37.8%</td></tr></tbody>
       </table>
-      <div class="note">* הוצאות מכירה: 7% מהמכירה | הריבית על המשכנתא: I.O בשנים הראשונות, לאחר מכן P+I</div>
+      <div class="note">* הוצאות מכירה: 7% מהמכירה | מבנה ההלוואה לפי השדות למעלה: תקופת I.O אם הוגדרה, לאחר מכן P+I</div>
     </div>
 
   </div><!-- end main-card -->
@@ -1116,7 +1116,7 @@
     </div>
     <div class="heatmap-body collapsed" id="heatmapBody">
       <div style="text-align:left; margin-bottom:6px;">
-        <span style="color:#c4c9d0; font-size:0.7rem;">לפי עליית ערך שנתית 4.5%</span>
+        <span style="color:#c4c9d0; font-size:0.7rem;">לפי עליית ערך שנתית 4.5% (הנחה שמרנית ביחס לממוצע ההיסטורי באזור)</span>
       </div>
       <div class="heatmap-scroll">
         <table class="heatmap-table" id="heatmapTable">
@@ -1129,7 +1129,7 @@
         <div class="heatmap-legend-bar"></div>
         <span>תשואה גבוהה</span>
       </div>
-      <div class="note" style="margin-top:10px;">* נתוני הטבלה קבועים ואינם משתנים בהתאם לשדות למעלה. הוצאות מכירה: 7% | I.O ב-5 שנים ראשונות, לאחר מכן P+I</div>
+      <div class="note" style="margin-top:10px;">* נתוני הטבלה קבועים ואינם משתנים בהתאם לשדות למעלה. הבסיס: מחיר $175,000, שכירות $1,800, ריבית 6.7%, P+I מהחודש הראשון (30 שנה, ללא תקופת I.O), הוצאות מכירה 7%</div>
     </div>
   </div>
 
@@ -1150,7 +1150,7 @@
       <div class="notes-section-title">נתונים פיננסים - ביאור</div>
       <div class="notes-row"> - הסכום הנדרש להזרים כהון עצמי לטובת השלמת העסקה - מורכב מהון עצמי לבילדר, תשלום עלויות ראשוניות כולל התאמת הנכס ועלויות סגירה</div>
       <div class="notes-row"> - הלנדר (מלווה המשכנתא) דורש לסגור מראש בחשבון ESCROW מס רכוש שנה קדימה וביטוח שנה קדימה, כמו כן דורש לראות נזיל בחשבון תשלומים צפויים חודשיים למשך 3 או 4 חודשים למקרה של העדר שוכר.</div>
-      <div class="notes-row">הלוואה - אחוז המימון - הפרופורמה מציגה הלוואה לפי 65% מגובה הנכס, זאת על מנת להשיג ריביות אטרקטיביות יותר, מיזעור סיכון של קאשפלואו שלילי. נוכל לבחון ברכישה הלוואה גבוהה יותר ובכך לשפר את מדדי התשואה ולהקטין את ההון העצמי הנדרש</div>
+      <div class="notes-row">הלוואה - אחוז המימון - הפרופורמה משווה בין רמות מימון שונות זו לצד זו (ברירת המחדל: ללא מימון, 50% ו-70% מגובה הנכס, והשדות פתוחים לעריכה). אחוז מימון נמוך יותר משיג ריביות אטרקטיביות יותר וממזער סיכון של קאשפלואו שלילי; הלוואה גבוהה יותר משפרת את מדדי התשואה על ההון ומקטינה את ההון העצמי הנדרש</div>
       <div class="notes-row"> - בארה"ב רק בתום תהליך החיתום נוכל לדעת את הריבית הסופית לרבות קנסות היציאה. תמיד אפשר להקטין ריבית שנתית בתמורה להעלאת "נקודות" (תשלומי פתיחת תיק והקמת הלוואה) או הגדלת קנסות יציאה - המטרה לקבל תנאים אופטימלים ונוחות למיחזור עתידי</div>
       <div class="notes-row"> - ההלוואה בנויה מתקופה ראשונית של תשלומי ריבית בלבד, לאחריה מיד תחל תקופה של תשלומי קרן וריבית. המטרה היא שההלוואה תמשיך להתקיים עד סגירת המשכנתא בלי צורך מיידי להחזירה או 'בלון' שיתפוצץ בדרך. במיחזור עתידי נבחן הקטנה של התשלום החודשי</div>
 
@@ -1159,7 +1159,7 @@
       <div class="notes-row"> - הביטוח משתנה בהתאם להצעות שנבחנו בטרם הרכישה עבור נכסים מסוג זה, הביטוח כולל אסונות טבע אך כיוון שלא מדובר ב'פלאד זון' (איזור מועד להצפות), הביטוח לא כולל מקרי הצפה (המשכנתא לא דורשת זאת). ניתן להוסיף ביטוחי הצפה בפרמיה נוספת.</div>
       <div class="notes-row"> - הערכנו את התקופה בה הנכס ריק מדייר כ 4%. לעתים יש נכס אליו יכנס שוכר לשנים רבות והנתון ישתפר, ולעתים שוכר יתחלף בקצב גבוה יותר והמספר יורע. 4% זה מקדם ממוצע באיזור לבתים מסוג זה, כמובן שאין וודאות לגבי התוצאה.</div>
       <div class="notes-row"> - מדובר בנכס חדש מקבלן עם אחריות מלאה על כל המערכות והמבנה. על אף זאת - בהחלפת דייר לפעמים תידרש צביעה לבית \ החלפת שטיח \ החלפת גג וכו'. בארה"ב נהוג לתחזק ולחדש בכל החלפת דייר, צריך לצפות שלעתים ובבתים מסוימים יצוצו בלת"מים בנושא. כמובן כל מה שבאחריות השוכר ירד מהדיפוזיט שייועבר בתחילת השכירות.</div>
-      <div class="notes-row"> - יצרנו טבלת ניתוח רגישות שתציג נתוני ROI שנתיים בהתאם לעליית ערך שנתית, ממוצע העלייה ב 5 שנים האחרונות היה סביב 5.3%, אבל חשוב להכיר את הרגישויות (חישוב נמצא בתחתית כל טבלא)</div>
+      <div class="notes-row"> - יצרנו טבלת ניתוח רגישות שתציג נתוני ROI שנתיים בהתאם לעליית ערך שנתית, ממוצע העלייה ב 5 שנים האחרונות היה סביב 5.4%, אבל חשוב להכיר את הרגישויות (חישוב נמצא בתחתית כל טבלא)</div>
       <div class="notes-row"> - מגלם את הרווח על יתרת המזומן מתקופת השכירות בתוספת עליית הערך בעת המימוש - לאחר הפחתת הוצאות מכירה (בכל מכירה של נכס בטווח מחירים זה נהוג לשלם 5-6 אחוז תיווך ועוד 1-2 אחוז לחברת הטייטל, לכן גילמנו הפחתה זו)</div>
 
       <div class="notes-section-title">עלויות - ביאור</div>
@@ -1246,6 +1246,7 @@
       </div>
       <div class="portfolio-note">ללא מימון · כל הנתונים ממשיים מתוך חוזים חתומים</div>
       <div class="portfolio-note">* בפועל אלו הוצאות שלא הוצאו – זו "קופה" שמייצרת חיסכון בצד לכל מקרה קדימה.</div>
+      <div class="portfolio-note">** נכס 10 (Domestic Dove, Hockley): ביטוח, HOA ועלויות סגירה טרם הוזנו - הנטו והתשואה שלו מוצגים חלקית עד השלמת הנתונים.</div>
     </div>
   </div><!-- end tab-portfolio -->
 
@@ -1258,6 +1259,14 @@
 
 // ======= Sync financing from header =======
 function syncFinFromHeader() {
+  recalc();
+}
+
+// מימון מחוץ ל-0-100 מוקלד ידנית (min/max לא חוסמים הקלדה) - מיישרים בעזיבת השדה
+function clampFin(el) {
+  const v = parseFloat(el.value);
+  if (isNaN(v) || v < 0) el.value = 0;
+  else if (v > 100) el.value = 100;
   recalc();
 }
 
@@ -1274,7 +1283,7 @@ function formatInput(el) {
 
 // ======= Financial Functions =======
 function PMT(rate, nper, pv) {
-  if (rate === 0) return -pv / nper;
+  if (rate === 0) return pv / nper; // מוסכמה אחידה: תשלום חיובי גם בריבית אפס
   return rate * pv / (1 - Math.pow(1 + rate, -nper));
 }
 
@@ -1317,7 +1326,7 @@ function fmtPct(v) {
 }
 function fmtSign(v) {
   const s = Math.round(v);
-  return (s >= 0 ? '+' : '') + '$' + s.toLocaleString('en-US');
+  return (s >= 0 ? '+$' : '-$') + Math.abs(s).toLocaleString('en-US');
 }
 
 function setCell(id, value, extraClass) {
@@ -1348,15 +1357,16 @@ function recalc() {
   const scenarios = [];
 
   for (let i = 0; i < 3; i++) {
-    const housePrice  = parseFloat(document.getElementById(`housePrice_${i}`).value.replace(/,/g,"")) || 0;
-    const rent        = parseFloat(document.getElementById(`rent_${i}`).value.replace(/,/g,"")) || 0;
-    const rateInput   = parseFloat(document.getElementById(`rate_${i}`).value) || 0;
+    // קלטים עם גבולות בטיחות - מונע NaN/Infinity/סימנים מתהפכים מהקלדות חלקיות
+    const housePrice  = Math.max(0, parseFloat(document.getElementById(`housePrice_${i}`).value.replace(/,/g,"")) || 0);
+    const rent        = Math.max(0, parseFloat(document.getElementById(`rent_${i}`).value.replace(/,/g,"")) || 0);
+    const rateInput   = Math.max(0, parseFloat(document.getElementById(`rate_${i}`).value) || 0);
     const rate        = rateInput / 100;
-    const ioYears     = parseFloat(document.getElementById(`ioYears_${i}`).value) || 0;
-    const piYears     = parseFloat(document.getElementById(`piYears_${i}`).value) || 0;
-    const finInput    = parseFloat(document.getElementById(`headerFin_${i}`).value) || 0;
+    const ioYears     = Math.max(0, parseFloat(document.getElementById(`ioYears_${i}`).value) || 0);
+    const piYears     = Math.max(0, parseFloat(document.getElementById(`piYears_${i}`).value) || 0);
+    const finInput    = Math.min(100, Math.max(0, parseFloat(document.getElementById(`headerFin_${i}`).value) || 0));
     const financing   = finInput / 100;
-    const holding     = parseFloat(document.getElementById(`holding_${i}`).value) || 0;
+    const holding     = Math.max(1, parseFloat(document.getElementById(`holding_${i}`).value) || 1);
 
     // When financing is 0% (all cash), gray out & disable loan-related inputs.
     const loanInactive = financing === 0;
@@ -1380,7 +1390,8 @@ function recalc() {
     const totalEquity  = downPayment + RESERVE_FUND;
 
     // --- Monthly Expenses ---
-    const colHOA        = parseFloat((document.getElementById(`hoa_${i}`).value || '').replace(/,/g, '')) || HOA;
+    // HOA לפי מה שמוצג בשדה - כולל 0 מפורש (אין נפילה שקטה לברירת מחדל)
+    const colHOA        = Math.max(0, parseFloat((document.getElementById(`hoa_${i}`).value || '').replace(/,/g, '')) || 0);
     const monthlyTax    = housePrice * PROPERTY_TAX / 12;
     const monthlyIns    = INSURANCE / 12;
     const monthlyMgmt   = rent * MGMT_FEE;
@@ -1396,14 +1407,15 @@ function recalc() {
     // --- Monthly Financing ---
     let monthlyFinancing = 0;
     if (financing > 0) {
-      if (holding <= ioYears) {
-        monthlyFinancing = rate * mortgage / 12;
+      const ioPay = rate * mortgage / 12;
+      if (holding <= ioYears || piYears <= 0) {
+        // I.O לכל תקופת ההחזקה (piYears=0 = הלוואת בלון: ריבית בלבד, קרן במכירה)
+        monthlyFinancing = ioPay;
       } else {
-        const ioMonths  = Math.min(holding, ioYears);
-        const piMonths  = holding - ioMonths;
-        const ioPay     = rate * mortgage / 12;
-        const piPay     = PMT(rate / 12, piYears * 12, mortgage);
-        monthlyFinancing = (ioMonths * ioPay + piMonths * piPay) / holding;
+        const ioY  = Math.min(holding, ioYears);
+        const piY  = Math.min(holding - ioY, piYears); // אין תשלומים אחרי סילוק מלא של ההלוואה
+        const piPay = PMT(rate / 12, piYears * 12, mortgage);
+        monthlyFinancing = (ioY * ioPay + piY * piPay) / holding;
       }
     }
 
@@ -1419,7 +1431,7 @@ function recalc() {
     });
 
     // Update sensitivity table header to match
-    const finLabel = `${Math.round(finInput)}% מימון`;
+    const finLabel = `${parseFloat(finInput.toFixed(1))}% מימון`; // שומר עשרוני (62.5% לא מעוגל ל-63%)
     document.getElementById(`sh${i}`).textContent = finLabel;
 
     // Update cells
@@ -1434,8 +1446,11 @@ function recalc() {
     setCell(`monthlyExp_${i}`, fmt$(monthlyExp));
     setCell(`monthlyFinancing_${i}`, fmt$(monthlyFinancing));
 
+    setCell(`ins_${i}`, fmt$(INSURANCE));
     setCell(`propTaxM_${i}`, fmt$(monthlyTax));
+    setCell(`insM_${i}`, fmt$(monthlyIns));
     setCell(`mgmtM_${i}`, fmt$(monthlyMgmt));
+    setCell(`hoaM_${i}`, fmt$(monthlyHOA));
     setCell(`vacM_${i}`, fmt$(monthlyVac));
     setCell(`tenantM_${i}`, fmt$(monthlyTenant));
 
@@ -1467,19 +1482,24 @@ function recalc() {
       const saleCosts = salePrice * 0.07;
 
       let remainMortgage;
-      if (holding <= ioYears) {
-        remainMortgage = mortgage;
+      if (financing <= 0) {
+        remainMortgage = 0;
+      } else if (holding <= ioYears || piYears <= 0) {
+        remainMortgage = mortgage; // בלון / עדיין בתקופת I.O - כל הקרן נפרעת במכירה
+      } else if (holding - ioYears >= piYears) {
+        remainMortgage = 0; // ההלוואה סולקה במלואה לפני המכירה
       } else {
-        remainMortgage = -FV(rate / 12,
+        remainMortgage = Math.max(0, -FV(rate / 12,
           (holding - ioYears) * 12,
           -PMT(rate / 12, piYears * 12, mortgage), // negate: PMT returns positive, FV needs negative (outflow)
-          mortgage);
+          mortgage));
       }
 
-      // annualReturn = ((salePrice - saleCosts - remainMortgage + annualCash*holding + reserveFund - downPayment) / downPayment) / holding
+      // annualReturn = ((salePrice - saleCosts - remainMortgage + annualCash*holding - downPayment) / downPayment) / holding
+      // קרן הרזרבה ($10K) ניטרלית לתשואה: נכנסת בהתחלה וחוזרת כמו שהיא במכירה - לא רווח ולא בסיס
       const annualReturn = ((salePrice - saleCosts - remainMortgage
                              + (monthlyCash * 12 * holding)
-                             + RESERVE_FUND - downPayment) / downPayment) / holding;
+                             - downPayment) / downPayment) / holding;
 
       const td = document.createElement('td');
       const pct = (annualReturn * 100).toFixed(1) + '%';
@@ -1497,18 +1517,20 @@ function recalc() {
 // ======= Default Values =======
 const DEFAULTS = [
   // Scenario 0: 0% financing | $175k | rent $1,800 | 30y P+I from day 1
-  { housePrice: '175,000', rent: '1,800', rate: 6.7, ioYears: 0, piYears: 30, financing: 0,  holding: 10 },
+  { housePrice: '175,000', rent: '1,800', rate: 6.7, ioYears: 0, piYears: 30, financing: 0,  holding: 10, hoa: '1,500' },
   // Scenario 1: 50% financing | $175k | rent $1,800 | 30y P+I from day 1
-  { housePrice: '175,000', rent: '1,800', rate: 6.7, ioYears: 0, piYears: 30, financing: 50, holding: 10 },
+  { housePrice: '175,000', rent: '1,800', rate: 6.7, ioYears: 0, piYears: 30, financing: 50, holding: 10, hoa: '1,500' },
   // Scenario 2: 70% financing | $175k | rent $1,800 | 30y P+I from day 1
-  { housePrice: '175,000', rent: '1,800', rate: 6.7, ioYears: 0, piYears: 30, financing: 70, holding: 10 },
+  { housePrice: '175,000', rent: '1,800', rate: 6.7, ioYears: 0, piYears: 30, financing: 70, holding: 10, hoa: '1,500' },
 ];
+// חוזה תחזוקה: ערכי ה-value בשדות ה-HTML חייבים להיות זהים ל-DEFAULTS, אחרת הדף
+// נטען עם בסיס אחד וכפתור האיפוס עובר לבסיס אחר (קרה ב-28/05, תוקן 14/07)
 
 function resetDefaults() {
   gtag('event', 'reset_defaults');
   for (let i = 0; i < 3; i++) {
     const d = DEFAULTS[i];
-    const fields = ['housePrice','rent','rate','ioYears','piYears','holding'];
+    const fields = ['housePrice','rent','rate','ioYears','piYears','holding','hoa'];
     for (const f of fields) {
       const el = document.getElementById(`${f}_${i}`);
       if (el) {
@@ -1561,11 +1583,11 @@ function heatmapColor(val) {
   const pct = val * 100;
   let r, g, b;
   if (pct < 0) {
-    // Negative: deep red to light red (-20% to 0%)
+    // Negative: deep red to white (-20% to 0%) - רציף בגבול האפס
     const t = Math.max(0, Math.min(1, (pct + 20) / 20));
     r = 192 + Math.round(t * 63);  // 192->255
-    g = Math.round(t * 212);       // 0->212
-    b = Math.round(t * 212);       // 0->212
+    g = Math.round(t * 255);       // 0->255
+    b = Math.round(t * 255);       // 0->255
   } else if (pct <= 3) {
     // Near zero to low: white to pale green (0% to 3%)
     const t = pct / 3;
@@ -1593,8 +1615,8 @@ function heatmapColor(val) {
 
 function heatmapTextColor(val) {
   const pct = val * 100;
-  // White text on very dark or very red backgrounds
-  if (pct < -5 || pct > 10) return '#ffffff';
+  // White text on very dark or very red backgrounds (ספים לפי ניגודיות: ירוק כהה מ-7%, אדום כהה מ-14%-)
+  if (pct < -14 || pct > 7) return '#ffffff';
   if (pct < 0) return '#4a0000';
   return '#1a1a2e';
 }
@@ -1632,7 +1654,9 @@ function buildHeatmap() {
   for (let yr = 1; yr <= maxYears; yr++) {
     bodyHTML += `<tr><td>שנה ${yr}</td>`;
     for (const fin of finLevels) {
-      const totalCost = price + INVESTMENT_FEE + TOTAL_CLOSING;
+      // כמו במחשבון הראשי: בקנייה במזומן אין עמלת הקמת הלוואה (loan points)
+      const closingHM = fin > 0 ? TOTAL_CLOSING : TOTAL_CLOSING - CLOSING_COSTS.loanPoints;
+      const totalCost = price + INVESTMENT_FEE + closingHM;
       const mortgage = fin * price;
       const downPayment = totalCost - mortgage;
 
@@ -1652,8 +1676,9 @@ function buildHeatmap() {
           monthlyFinancing = rate * mortgage / 12;
         } else {
           const ioPay = rate * mortgage / 12;
+          const piY = Math.min(yr - ioYears, piYears); // אין תשלומים אחרי סילוק מלא
           const piPay = PMT(rate / 12, piYears * 12, mortgage);
-          monthlyFinancing = (ioYears * ioPay + (yr - ioYears) * piPay) / yr;
+          monthlyFinancing = (ioYears * ioPay + piY * piPay) / yr;
         }
       }
 
@@ -1670,16 +1695,18 @@ function buildHeatmap() {
       if (fin > 0 && rate > 0) {
         if (yr <= ioYears) {
           remainMortgage = mortgage;
+        } else if (yr - ioYears >= piYears) {
+          remainMortgage = 0; // ההלוואה סולקה במלואה לפני המכירה
         } else {
-          remainMortgage = -FV(rate / 12, (yr - ioYears) * 12,
-            -PMT(rate / 12, piYears * 12, mortgage), mortgage);
+          remainMortgage = Math.max(0, -FV(rate / 12, (yr - ioYears) * 12,
+            -PMT(rate / 12, piYears * 12, mortgage), mortgage));
         }
       }
 
-      // Annual ROI
+      // Annual ROI - קרן הרזרבה ניטרלית (כמו בטבלת הרגישות): לא רווח ולא בסיס
       const annualROI = ((salePrice - saleCosts - remainMortgage
                           + (monthlyCash * 12 * yr)
-                          + RESERVE_FUND - downPayment) / downPayment) / yr;
+                          - downPayment) / downPayment) / yr;
 
       const bg = heatmapColor(annualROI);
       const fg = heatmapTextColor(annualROI);
